@@ -3,6 +3,7 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { CalendarComponent } from './calendar/calendar.component';
 import { LoginComponent } from './login/login.component';
 import { Route } from './layout/route.service'
+import { ReportComponent } from './report/report.component';
 
 export const router: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -10,6 +11,7 @@ export const router: Routes = [
   Route.normalLayout([
     { path: 'calendar', component: CalendarComponent },
   ]),
+  { path: 'report', component: ReportComponent },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 
