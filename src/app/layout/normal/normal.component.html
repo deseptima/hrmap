@@ -1,0 +1,39 @@
+<nz-layout class="layout">
+  <nz-header style="position:fixed;width:100%;z-index: 900;box-shadow: 0 2px 12px 0 #dfe3eb;">
+    <i class="menu-drawer-icon" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'" theme="outline" (click)="isCollapsed=!isCollapsed"></i>
+    <!-- <img class="logo" src="../../../assets/images/logoheader.png"> -->
+
+  </nz-header>
+  <nz-drawer [nzClosable]="false" [nzVisible]="isCollapsed" nzPlacement="left" (nzOnClose)="close()">
+    <nz-row class="menu-drawer" (click)="close()"><label>Close</label></nz-row>
+    <!-- <nz-row *ngIf="role=='Employee'">
+      <nz-row class="menu-drawer"><label>Admin Profile</label></nz-row>
+      <nz-row class="menu-drawer" (click)="route('/admin/dashboard')"><label>Admin Dashboard</label></nz-row>
+      <nz-row class="menu-drawer"><label>Admin Classify Board</label></nz-row>
+      <nz-row class="menu-drawer"><label>Create Engagement Letter</label></nz-row>
+      <nz-row class="menu-drawer"><label>Create Invoice</label></nz-row>
+      <nz-row class="menu-drawer"><label>Approve Lawyer Application</label></nz-row>
+      <nz-row class="menu-drawer" (click)="logout()"><label>Log out</label></nz-row>
+    </nz-row>
+    <nz-row *ngIf="role=='Client'">
+      <nz-row class="menu-drawer"><label>Client Profile</label></nz-row>
+      <nz-row class="menu-drawer" (click)="route('/client/dashboard')"><label>Client Dashboard</label></nz-row>
+      <nz-row class="menu-drawer" (click)="logout()"><label>Log out</label></nz-row>
+    </nz-row>
+    <nz-row *ngIf="role=='ServicePerson'">
+      <nz-row class="menu-drawer"><label>Lawyer Profile</label></nz-row>
+      <nz-row class="menu-drawer" (click)="route('/lawyer/dashboard')"><label>Lawyer Dashboard</label></nz-row>
+      <nz-row class="menu-drawer"><label>Lawyer Classify Board</label></nz-row>
+      <nz-row class="menu-drawer" (click)="logout()"><label>Log out</label></nz-row>
+    </nz-row> -->
+    <nz-row class="menu-drawer" (click)="logout()"><label>Log out</label></nz-row>
+  </nz-drawer>
+  <nz-layout style="padding:6rem 1rem 1rem 1rem">
+    <nz-content style="background:#fff; padding: 24px; min-height: 280px;">
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+  <!-- <nz-footer style="text-align: center;">Copyright © 2018 DOLAWS Co.Ltd,. All rights reserved.</nz-footer> -->
+</nz-layout>
