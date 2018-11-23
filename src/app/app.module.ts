@@ -12,6 +12,7 @@ import en from '@angular/common/locales/en';
 import zh from '@angular/common/locales/zh';
 import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { NormalComponent } from './layout/normal/normal.component';
 
 registerLocaleData(en);
 
@@ -19,7 +20,8 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     LoginComponent,
-    CalendarComponent
+    CalendarComponent,
+    NormalComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+.ant-radio-button-wrapper:first-child {
+  display: none;
+}
+
+.ant-radio-button-wrapper:last-child {
+  display: none;
+}
+
+.ant-modal-header {
+  text-align: center;
+}
