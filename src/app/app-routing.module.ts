@@ -10,8 +10,8 @@ export const router: Routes = [
   { path: 'login', component: LoginComponent },
   Route.normalLayout([
     { path: 'calendar', component: CalendarComponent },
+    { path: 'report', component: ReportComponent },
   ]),
-  { path: 'report', component: ReportComponent },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 
