@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { NormalComponent } from './layout/normal/normal.component';
 import { ReportComponent } from './report/report.component';
+import { TableComponent } from './table/table.component';
 
 registerLocaleData(en);
 
@@ -23,7 +24,8 @@ registerLocaleData(en);
     LoginComponent,
     CalendarComponent,
     NormalComponent,
-    ReportComponent
+    ReportComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
