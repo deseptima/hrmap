@@ -8,13 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdModule, NZ_I18N, en_US, zh_CN } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
+import { RouterModule } from '@angular/router'
 import en from '@angular/common/locales/en';
 import zh from '@angular/common/locales/zh';
 import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { NormalComponent } from './layout/normal/normal.component';
 import { ReportComponent } from './report/report.component';
-import { TableComponent } from './table/table.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MasterModule } from './master/master.module'
 
 registerLocaleData(en);
 
@@ -25,7 +27,7 @@ registerLocaleData(en);
     CalendarComponent,
     NormalComponent,
     ReportComponent,
-    TableComponent
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +37,13 @@ registerLocaleData(en);
     HttpClientModule,
     NgZorroAntdModule,
 
-    AppRoutingModule
+    AppRoutingModule,
+    MasterModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    RouterModule,
+  ]
 })
 export class AppModule { }

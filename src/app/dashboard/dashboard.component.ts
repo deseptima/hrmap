@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html'
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html'
 })
-export class TableComponent {
+export class DashboardComponent {
+  gridStyle = {
+    width    : '33%',
+    textAlign: 'center'
+  };
   dataSet = [
     {
       key    : '1',
