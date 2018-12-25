@@ -1,12 +1,17 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon type="home"></i>Dashboard
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
 <nz-card nzTitle="Master Data">
-  <div nz-card-grid [ngStyle]="gridStyle">Company</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Branch</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Department</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Team</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Employee</div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/company')">Company</div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/branch')">Branch</div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/department')">Department</div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/team')">Team</div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/employee')">Employee</div>
 </nz-card>
 <nz-card nzTitle="Other Menu">
-  <div nz-card-grid [ngStyle]="gridStyle">Calendar</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Inquiry</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Report</div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/calendar')">Calendar</div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/ask-question')">Ask-Question</div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/report')">Report</div>
 </nz-card>

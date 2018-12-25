@@ -16,6 +16,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { NormalComponent } from './layout/normal/normal.component';
 import { ReportComponent } from './report/report.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AskQuestionComponent } from './ask-question/ask-question.component';
 import { MasterModule } from './master/master.module'
 
 registerLocaleData(en);
@@ -27,7 +28,8 @@ registerLocaleData(en);
     CalendarComponent,
     NormalComponent,
     ReportComponent,
-    DashboardComponent
+    DashboardComponent,
+    AskQuestionComponent
   ],
   imports: [
     BrowserModule,

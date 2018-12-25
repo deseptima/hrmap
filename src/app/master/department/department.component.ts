@@ -5,24 +5,38 @@ import { Component } from '@angular/core';
   templateUrl: './department.component.html'
 })
 export class DepartmentComponent {
-  dataSet = [
+  data = [
     {
-      key    : '1',
-      name   : 'John Brown',
-      age    : 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key    : '2',
-      name   : 'Jim Green',
-      age    : 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key    : '3',
-      name   : 'Joe Black',
-      age    : 32,
-      address: 'Sidney No. 1 Lake Park'
+      id: 1,
+      name: 'Java Application',
+      active: true,
     }
   ];
+
+  sortName = null;
+  sortValue = null;
+  displayData = [...this.data]
+
+  sort(sort: { key: string, value: string }): void {
+    console.log(sort.key + ',' + sort.value)
+    this.sortName = sort.key;
+    this.sortValue = sort.value;
+    this.search();
+  }
+
+  search(): void {
+    /** filter data **/
+    // const filterFunc = item => (this.searchAddress ? item.address.indexOf(this.searchAddress) !== -1 : true) && (this.listOfSearchName.length ? this.listOfSearchName.some(name => item.name.indexOf(name) !== -1) : true);
+    // const data = this.data.filter(item => filterFunc(item));
+    var data = this.data
+    /** sort data **/
+    if (this.sortName && this.sortValue) {
+      console.log('a')
+      this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[this.sortName] > b[this.sortName] ? 1 : -1) : (b[this.sortName] > a[this.sortName] ? 1 : -1));
+    } else {
+      this.displayData = data;
+    }
+  }
+  ngOnInit(): void {
+  }
 }

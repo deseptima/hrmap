@@ -11,7 +11,6 @@ import { DepartmentComponent } from './department/department.component'
 import { EmployeeComponent } from './employee/employee.component'
 import { TeamComponent } from './team/team.component'
 
-
 @NgModule({
   declarations: [
     BranchComponent,
@@ -23,11 +22,11 @@ import { TeamComponent } from './team/team.component'
   imports: [
     MasterRoutingModule,
 
+    FormsModule,
     NgZorroAntdModule,
     CommonModule
   ],
   exports: [
-    FormsModule,
     ReactiveFormsModule
   ]
 })
