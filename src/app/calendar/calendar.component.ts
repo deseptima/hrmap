@@ -13,7 +13,37 @@ export class CalendarComponent {
   isVisible = false
   isVisible2 = false
   selectedValue: any
-  dataSetMontly = [{ id: '2', date: new Date('2018-12-20T00:00:00').toString(), data: 'HRMAP', startDate: '2018-12-20T00:00:00', endDate: '2018-12-22T00:00:00' }];
+  selectEmployee = '1'
+  dataSetMontly = [
+    {
+      id: '1',
+      date: new Date('2018-12-19T00:00:00').toString(),
+      data: 'HRMAP',
+      startDate: '2018-12-19T00:00:00',
+      endDate: '2018-12-22T00:00:00'
+    },
+    {
+      id: '2',
+      date: new Date('2018-12-20T00:00:00').toString(),
+      data: 'HRMAP',
+      startDate: '2018-12-20T00:00:00',
+      endDate: '2018-12-22T00:00:00'
+    },
+    {
+      id: '3',
+      date: new Date('2018-12-21T00:00:00').toString(),
+      data: 'HRMAP',
+      startDate: '2018-12-21T00:00:00',
+      endDate: '2018-12-22T00:00:00'
+    },
+    {
+      id: '4',
+      date: new Date('2018-12-22T00:00:00').toString(),
+      data: 'HRMAP',
+      startDate: '2018-12-22T00:00:00',
+      endDate: '2018-12-22T00:00:00'
+    },
+  ];
   calendarModalData = {
     subject: 'Subject',
     startDate: new Date(),
@@ -22,7 +52,8 @@ export class CalendarComponent {
     endTime: new Date(),
     isAllDay: false,
     details: '',
-    type: 'Type'
+    type: '1',
+    point: 0,
   }
 
   getMonthData(date: Date): number | null {
@@ -47,6 +78,13 @@ export class CalendarComponent {
   type: "Appointment"
   showModal(id?: any): void {
     this.isVisible = true;
+    console.log(id)
+    if (id) {
+      this.calendarModalData.subject = this.dataSetMontly[id-1].data
+      this.calendarModalData.startDate = new Date(this.dataSetMontly[id-1].startDate)
+      this.calendarModalData.endDate = new Date(this.dataSetMontly[id-1].endDate)
+      this.calendarModalData.point = 1
+    }
     // this.calendarModalData.subject = this.subject
     // this.calendarModalData.startDate = new Date(this.startDate)
     // this.startTime = this.startTime
@@ -76,7 +114,8 @@ export class CalendarComponent {
       endTime: new Date(),
       isAllDay: false,
       details: '',
-      type: 'Type'
+      type: '1',
+      point: 0,
     }
   }
 
@@ -91,7 +130,68 @@ export class CalendarComponent {
       endTime: new Date(),
       isAllDay: false,
       details: '',
-      type: 'Type'
+      type: '1',
+      point: 0,
+    }
+  }
+  onChange(result: any): void {
+    console.log('onChange: ', result);
+    if (result == '1') {
+      this.dataSetMontly = [
+        {
+          id: '1',
+          date: new Date('2018-12-19T00:00:00').toString(),
+          data: 'HRMAP',
+          startDate: '2018-12-19T00:00:00',
+          endDate: '2018-12-22T00:00:00'
+        },
+        {
+          id: '2',
+          date: new Date('2018-12-20T00:00:00').toString(),
+          data: 'HRMAP',
+          startDate: '2018-12-20T00:00:00',
+          endDate: '2018-12-22T00:00:00'
+        },
+        {
+          id: '3',
+          date: new Date('2018-12-21T00:00:00').toString(),
+          data: 'HRMAP',
+          startDate: '2018-12-21T00:00:00',
+          endDate: '2018-12-22T00:00:00'
+        },
+        {
+          id: '4',
+          date: new Date('2018-12-22T00:00:00').toString(),
+          data: 'HRMAP',
+          startDate: '2018-12-22T00:00:00',
+          endDate: '2018-12-22T00:00:00'
+        },
+      ];
+
+    } else if (result == '2') {
+      this.dataSetMontly = [
+        {
+          id: '1',
+          date: new Date('2018-12-10T00:00:00').toString(),
+          data: 'RawDo',
+          startDate: '2018-12-10T00:00:00',
+          endDate: '2018-12-12T00:00:00'
+        },
+        {
+          id: '2',
+          date: new Date('2018-12-11T00:00:00').toString(),
+          data: 'RawDo',
+          startDate: '2018-12-11T00:00:00',
+          endDate: '2018-12-12T00:00:00'
+        },
+        {
+          id: '3',
+          date: new Date('2018-12-12T00:00:00').toString(),
+          data: 'RawDo',
+          startDate: '2018-12-12T00:00:00',
+          endDate: '2018-12-12T00:00:00'
+        },
+      ];
     }
   }
 }

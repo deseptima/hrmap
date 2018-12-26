@@ -7,21 +7,38 @@ import {
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 
 @Component({
-  selector: 'master-company',
-  templateUrl: './company.component.html'
+  selector: 'master-supply',
+  templateUrl: './supply.component.html'
 })
-export class CompanyComponent {
+export class SupplyComponent {
   validateForm: FormGroup;
   confirmModal: NzModalRef;
   isVisible = false
+  date = null; // new Date();
   data = [
     {
       id: 1,
-      companyCode: '001',
-      name: 'Soft Square International Co., Ltd.',
-      address: '51/597 หมู่ 7 ตำบล หลักหก อำเภอ เมือง จังหวัด ปทุมธานี'
-    }
+      supplyCode: '001',
+      companyCode: '001: Soft Square International Co., Ltd.',
+      branchCode: '001: สาขา รังสิต',
+      supplyName: 'โต๊ะ',
+      category: 'อุปกรณ์อำนวยความสะดวก'
+    },
+    {
+      id: 2,
+      supplyCode: '002',
+      companyCode: '001: Soft Square International Co., Ltd.',
+      branchCode: '001: สาขา รังสิต',
+      supplyName: 'คอมพิวเตอร์',
+      category: 'อุปกรณ์อิเล็กทรอนิกส์'
+    },
   ];
+  demoValue = 100;
+  formatterPercent = value => `${value} %`;
+  parserPercent = value => value.replace(' %', '');
+  formatterDollar = value => `${value} Baht`;
+  parserDollar = value => value.replace('Baht ', '');
+
 
   sortName = null;
   sortValue = null;
@@ -51,9 +68,13 @@ export class CompanyComponent {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      id: ['002'],
-      companyName: [null, [Validators.required]],
-      address: [null, [Validators.required]],
+      id: ['003'],
+      companyCode: [null, [Validators.required]],
+      branchCode: [null, [Validators.required]],
+      supplyName: [null, [Validators.required]],
+      category: [null, [Validators.required]],
+      date: [null, [Validators.required]],
+      price: [0, [Validators.required]],
     });
   }
   submitForm(): void {
@@ -81,5 +102,8 @@ export class CompanyComponent {
       this.isVisible = false;
       this.validateForm.reset()
     }
+  }
+  onChange(result: Date): void {
+    console.log('onChange: ', result);
   }
 }

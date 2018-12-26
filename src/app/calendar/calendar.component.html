@@ -28,12 +28,45 @@
     </nz-calendar>
   </nz-card>
   <ng-template #addTemplate>
-    <button nz-button (click)="showModal()"><i nz-icon type="plus" theme="outline"></i>Add</button>
+    <div nz-row nzGutter="20">
+      <nz-col class="gutter-row" nzSpan="8" style="text-align:left;">
+        <nz-select name="select-error" [ngModel]="selectEmployee" (ngModelChange)="onChange($event)">
+          <nz-option nzValue="1" nzLabel="001: ยศกร บางทิพย์"></nz-option>
+          <nz-option nzValue="2" nzLabel="002: ศุภณัฐ ฤทธิวัชร"></nz-option>
+        </nz-select>
+      </nz-col>
+      <nz-col class="gutter-row" nzSpan="4" nzOffset="12" style="text-align:right;">
+        <button nz-button (click)="showModal()"><i nz-icon type="plus" theme="outline"></i>Add</button>
+      </nz-col>
+    </div>
     <!-- <button nz-button>asd</button> -->
   </ng-template>
 </nz-card>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Task: {{calendarModalData.subject}}" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Task: {{calendarModalData.subject}}" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <nz-row class="pd-row" nzGutter="20">
+    <nz-col class="gutter-row" nzSpan="4">
+      <b>Type:</b>
+    </nz-col>
+    <nz-col class="gutter-row" nzSpan="20">
+      <nz-select name="select-error" [(ngModel)]="calendarModalData.type">
+        <nz-option nzValue="1" nzLabel="Dev"></nz-option>
+        <nz-option nzValue="2" nzLabel="Issue"></nz-option>
+        <nz-option nzValue="3" nzLabel="Maintenance"></nz-option>
+      </nz-select>
+    </nz-col>
+  </nz-row>
+  <nz-row class="pd-row" nzGutter="20">
+    <nz-col class="gutter-row" nzSpan="4">
+      <b>Point:</b>
+    </nz-col>
+    <nz-col class="gutter-row" nzSpan="20">
+      <nz-input-group [nzPrefix]="prefixUser">
+        <nz-input-number [(ngModel)]="calendarModalData.point" [nzMin]="1" [nzStep]="1"></nz-input-number>
+      </nz-input-group>
+    </nz-col>
+  </nz-row>
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="4">
       <b>From:</b>
@@ -46,12 +79,12 @@
     <nz-col class="gutter-row" nzSpan="8" *ngIf="!calendarModalData.isAllDay">
       <nz-time-picker [(ngModel)]="calendarModalData.startTime" nzFormat="HH:mm"></nz-time-picker>
     </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay">
+    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay" style="width:unset;">
       <nz-date-picker nzDisabled [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="dd-MMM-yyyy" [(ngModel)]="calendarModalData.startDate"
         [nzStyle]="dateStyle" nzPlaceHolder="Start" (ngModelChange)="onStartChange($event)" (nzOnOpenChange)="handleStartOpenChange($event)">
       </nz-date-picker>
     </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay">
+    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay" style="width:unset;">
       <nz-time-picker [(ngModel)]="calendarModalData.startTime" nzFormat="HH:mm" nzDisabled></nz-time-picker>
     </nz-col>
   </nz-row>
@@ -68,13 +101,13 @@
     <nz-col class="gutter-row" nzSpan="8" *ngIf="!calendarModalData.isAllDay">
       <nz-time-picker [(ngModel)]="calendarModalData.endTime" nzFormat="HH:mm"></nz-time-picker>
     </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay">
+    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay" style="width:unset;">
       <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime nzFormat="dd-MMM-yyyy" [(ngModel)]="calendarModalData.endDate"
         [nzStyle]="dateStyle" nzPlaceHolder="End" [nzOpen]="endOpen" (ngModelChange)="onEndChange($event)"
         (nzOnOpenChange)="handleEndOpenChange($event) " nzDisabled>
       </nz-date-picker>
     </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay">
+    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay" style="width:unset;">
       <nz-time-picker [(ngModel)]="calendarModalData.endTime" nzFormat="HH:mm" nzDisabled></nz-time-picker>
     </nz-col>
   </nz-row>

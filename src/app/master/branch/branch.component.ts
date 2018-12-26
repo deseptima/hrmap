@@ -1,13 +1,25 @@
 import { Component } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+
 
 @Component({
   selector: 'master-branch',
   templateUrl: './branch.component.html'
 })
 export class BranchComponent {
+  validateForm: FormGroup;
+  confirmModal: NzModalRef;
+  isVisible = false
   data = [
     {
       id: 1,
+      branchCode: '001',
+      companyCode: '001:Soft Square International Co., Ltd.',
       name: 'สาขา รังสิต',
       address: '51/597 หมู่ 7 ตำบล หลักหก อำเภอ เมือง จังหวัด ปทุมธานี'
     }
@@ -16,6 +28,7 @@ export class BranchComponent {
   sortName = null;
   sortValue = null;
   displayData = [...this.data]
+  constructor(private fb: FormBuilder, private modal: NzModalService) { }
 
   sort(sort: { key: string, value: string }): void {
     console.log(sort.key + ',' + sort.value)
@@ -37,6 +50,39 @@ export class BranchComponent {
       this.displayData = data;
     }
   }
+
   ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      id: ['002'],
+      companyCode: [null, [Validators.required]],
+      branchName: [null, [Validators.required]],
+      address: [null, [Validators.required]],
+    });
+  }
+  submitForm(): void {
+    for (const i in this.validateForm.controls) {
+      this.validateForm.controls[i].markAsDirty();
+      this.validateForm.controls[i].updateValueAndValidity();
+    }
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    if (this.validateForm.dirty && this.validateForm.value) {
+      this.confirmModal = this.modal.confirm({
+        nzTitle: 'Do you Want to discard these items?',
+        nzContent: 'When clicked the OK button, all items will be discarded',
+        nzOnOk: () => {
+          this.isVisible = false;
+          this.validateForm.reset()
+        }
+      });
+    } else {
+      this.isVisible = false;
+      this.validateForm.reset()
+    }
   }
 }

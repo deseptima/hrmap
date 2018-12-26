@@ -11,7 +11,7 @@
     Team
   </nz-breadcrumb-item>
 </nz-breadcrumb>
-<nz-card nzTitle="Company Data">
+<nz-card nzTitle="Team Data">
   <nz-row nzGutter="16">
     <nz-col class="gutter-row" nzSpan="16" nzOffset="4" nzGutter="8">
       <nz-input-group nzSearch [nzSuffix]="suffixButton">
@@ -22,7 +22,7 @@
       </ng-template>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="4" nzGutter="8" style="text-align:right;">
-      <button nz-button nzType="primary"><i nz-icon type="plus" theme="outline"></i>Add</button>
+      <button nz-button nzType="primary" (click)="isVisible=!isVisible"><i nz-icon type="plus" theme="outline"></i>Add</button>
     </nz-col>
   </nz-row>
 
@@ -31,17 +31,23 @@
       <nz-table #basicTable [nzData]="displayData">
         <thead (nzSortChange)="sort($event)" nzSingleSort>
           <tr>
-            <th nzShowSort nzSortKey="id">ID</th>
+            <th nzShowSort nzSortKey="teamCode">Team Code</th>
+            <th nzShowSort nzSortKey="companyCode">Company Code</th>
+            <th nzShowSort nzSortKey="branchCode">Branch Code</th>
+            <th nzShowSort nzSortKey="departmentCode">Department Code</th>
             <th nzShowSort nzSortKey="name">Name</th>
-            <th nzShowSort nzSortKey="address">Address</th>
+            <th nzShowSort nzSortKey="teamLeader">Team Leader</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of displayData">
-            <td>{{data.id}}</td>
+            <td>{{data.teamCode}}</td>
+            <td>{{data.companyCode}}</td>
+            <td>{{data.branchCode}}</td>
+            <td>{{data.departmentCode}}</td>
             <td>{{data.name}}</td>
-            <td>{{data.address}}</td>
+            <td>{{data.teamLeader}}</td>
             <td>
               <a>Delete</a>
             </td>
@@ -52,3 +58,72 @@
   </nz-row>
 
 </nz-card>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Add Team" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>ID</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input formControlName="id" nz-input placeholder="Id">
+        </nz-input-group>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>Company Code</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-select name="select-error" formControlName="companyCode" [ngModel]="'001'">
+          <nz-option nzValue="001" nzLabel="001: Soft Square International Co., Ltd."></nz-option>
+        </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>Branch Code</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-select name="select-error" formControlName="branchCode" [ngModel]="'001'">
+          <nz-option nzValue="001" nzLabel="001: สาขา รังสิต"></nz-option>
+        </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>Department Code</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-select name="select-error" formControlName="departmentCode" [ngModel]="'001'">
+          <nz-option nzValue="001" nzLabel="001: Java Application"></nz-option>
+        </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>Team Name</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input formControlName="teamName" nz-input placeholder="Team Name">
+        </nz-input-group>
+        <nz-form-explain *ngIf="validateForm.get('teamName').dirty && validateForm.get('teamName').errors">Please
+          input Team Name!</nz-form-explain>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>Team Leader Name</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input formControlName="teamLeaderName" nz-input placeholder="Team Leader Name">
+        </nz-input-group>
+        <nz-form-explain *ngIf="validateForm.get('teamLeaderName').dirty && validateForm.get('teamLeaderName').errors">Please
+          input Team Leader Name!</nz-form-explain>
+      </nz-col>
+    </nz-row>
+  </form>
+</nz-modal>
