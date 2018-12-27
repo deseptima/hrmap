@@ -15,7 +15,7 @@
   <nz-row nzGutter="16">
     <nz-col class="gutter-row" nzSpan="16" nzOffset="4" nzGutter="8">
       <nz-input-group nzSearch [nzSuffix]="suffixButton">
-        <input type="text" nz-input placeholder="ID, Name, Address">
+        <input type="text" nz-input placeholder="Department Code, Company Code, Branch Code, Department Name">
       </nz-input-group>
       <ng-template #suffixButton>
         <button nz-button nzType="primary" nzSearch>Search</button>
@@ -64,7 +64,7 @@
         <nz-form-label>ID</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-input-group [nzPrefix]="prefixUser">
+        <nz-input-group>
           <input formControlName="id" nz-input placeholder="Id">
         </nz-input-group>
       </nz-col>
@@ -94,7 +94,7 @@
         <nz-form-label>Department Name</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-input-group [nzPrefix]="prefixUser">
+        <nz-input-group>
           <input formControlName="departmentName" nz-input placeholder="Department Name">
         </nz-input-group>
         <nz-form-explain *ngIf="validateForm.get('departmentName').dirty && validateForm.get('departmentName').errors">Please

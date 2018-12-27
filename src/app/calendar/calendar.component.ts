@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common'
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-calendar',
@@ -7,13 +8,14 @@ import { DatePipe } from '@angular/common'
   styleUrls: ['./calendar.component.less']
 })
 export class CalendarComponent {
-  constructor(private datepipe: DatePipe, ) {
+  constructor(private datepipe: DatePipe, private modal: NzModalService) {
 
   }
   isVisible = false
   isVisible2 = false
   selectedValue: any
   selectEmployee = '1'
+  confirmModal: NzModalRef;
   dataSetMontly = [
     {
       id: '1',
@@ -45,7 +47,7 @@ export class CalendarComponent {
     },
   ];
   calendarModalData = {
-    subject: 'Subject',
+    subject: '',
     startDate: new Date(),
     startTime: new Date(),
     endDate: new Date(),
@@ -78,11 +80,11 @@ export class CalendarComponent {
   type: "Appointment"
   showModal(id?: any): void {
     this.isVisible = true;
-    console.log(id)
+    // console.log(id)
     if (id) {
-      this.calendarModalData.subject = this.dataSetMontly[id-1].data
-      this.calendarModalData.startDate = new Date(this.dataSetMontly[id-1].startDate)
-      this.calendarModalData.endDate = new Date(this.dataSetMontly[id-1].endDate)
+      this.calendarModalData.subject = this.dataSetMontly[id - 1].data
+      this.calendarModalData.startDate = new Date(this.dataSetMontly[id - 1].startDate)
+      this.calendarModalData.endDate = new Date(this.dataSetMontly[id - 1].endDate)
       this.calendarModalData.point = 1
     }
     // this.calendarModalData.subject = this.subject
@@ -104,10 +106,9 @@ export class CalendarComponent {
     // // console.log(a)
   }
   handleOk(): void {
-    console.log('Button ok clicked!');
     this.isVisible = false;
     this.calendarModalData = {
-      subject: 'Subject',
+      subject: '',
       startDate: new Date(),
       startTime: new Date(),
       endDate: new Date(),
@@ -120,10 +121,19 @@ export class CalendarComponent {
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
-    this.isVisible = false;
-    this.calendarModalData = {
-      subject: 'Subject',
+    // this.calendarModalData = {
+    //   subject: '',
+    //   startDate: new Date(),
+    //   startTime: new Date(),
+    //   endDate: new Date(),
+    //   endTime: new Date(),
+    //   isAllDay: false,
+    //   details: '',
+    //   type: '1',
+    //   point: 0,
+    // }
+    var sampleData = {
+      subject: '',
       startDate: new Date(),
       startTime: new Date(),
       endDate: new Date(),
@@ -133,9 +143,27 @@ export class CalendarComponent {
       type: '1',
       point: 0,
     }
+    if (this.calendarModalData.subject != sampleData.subject
+      || this.calendarModalData.isAllDay != sampleData.isAllDay
+      || this.calendarModalData.details != sampleData.details
+      || this.calendarModalData.type != sampleData.type
+      || this.calendarModalData.point != sampleData.point) {
+      this.confirmModal = this.modal.confirm({
+        nzTitle: 'Do you Want to discard these items?',
+        nzContent: 'When clicked the OK button, all items will be discarded',
+        nzOnOk: () => {
+          this.isVisible = false;
+          this.calendarModalData = sampleData
+        }
+      });
+
+    }
+    // console.log(this.calendarModalData==this.sampleData)
+    // console.log(this.calendarModalData)
+    // console.log(this.sampleData)
   }
   onChange(result: any): void {
-    console.log('onChange: ', result);
+    // console.log('onChange: ', result);
     if (result == '1') {
       this.dataSetMontly = [
         {

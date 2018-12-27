@@ -47,6 +47,16 @@
   (nzOnOk)="handleOk()">
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="4">
+      <b>Task:</b>
+    </nz-col>
+    <nz-col class="gutter-row" nzSpan="20">
+      <nz-input-group>
+        <input [(ngModel)]="calendarModalData.subject" nz-input placeholder="Task Name">
+      </nz-input-group>
+    </nz-col>
+  </nz-row>
+  <nz-row class="pd-row" nzGutter="20">
+    <nz-col class="gutter-row" nzSpan="4">
       <b>Type:</b>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="20">
@@ -62,7 +72,7 @@
       <b>Point:</b>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="20">
-      <nz-input-group [nzPrefix]="prefixUser">
+      <nz-input-group>
         <nz-input-number [(ngModel)]="calendarModalData.point" [nzMin]="1" [nzStep]="1"></nz-input-number>
       </nz-input-group>
     </nz-col>

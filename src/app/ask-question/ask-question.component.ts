@@ -1,41 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import {
-  AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
+  ValidationErrors,
   Validators
 } from '@angular/forms';
-import { Router } from "@angular/router";
+import { Observable, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-ask-question',
   templateUrl: './ask-question.component.html',
   styleUrls: ['./ask-question.component.less']
 })
-export class AskQuestionComponent implements OnInit {
+export class AskQuestionComponent{
   validateForm: FormGroup;
+  submitForm = ($event, value) => {
+    $event.preventDefault();
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[ key ].markAsDirty();
+      this.validateForm.controls[ key ].updateValueAndValidity();
+    }
+    console.log(value);
+  };
 
-  submitForm(): void {
-    for (const i in this.validateForm.controls) {
-      this.validateForm.controls[ i ].markAsDirty();
-      this.validateForm.controls[ i ].updateValueAndValidity();
+  resetForm(e: MouseEvent): void {
+    e.preventDefault();
+    this.validateForm.reset();
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[ key ].markAsPristine();
+      this.validateForm.controls[ key ].updateValueAndValidity();
     }
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,) {
-  }
+  confirmValidator = (control: FormControl): { [ s: string ]: boolean } => {
+    if (!control.value) {
+      return { required: true };
+    } else if (control.value !== this.validateForm.controls.password.value) {
+      return { confirm: true, error: true };
+    }
+  };
 
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder) {
     this.validateForm = this.fb.group({
-      userName: [ null, [ Validators.required ] ],
-      password: [ null, [ Validators.required ] ],
-      remember: [ true ]
+      sender: ['', [Validators.required]],
+      topic: [ '', [ Validators.required ] ],
+      // email   : [ '', [ Validators.email, Validators.required ] ],
+      description : [ '', [ Validators.required ] ]
     });
-  }
-
-  login(){
-    this.router.navigateByUrl("/calendar")
   }
 }

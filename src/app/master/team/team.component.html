@@ -66,7 +66,7 @@
         <nz-form-label>ID</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-input-group [nzPrefix]="prefixUser">
+        <nz-input-group>
           <input formControlName="id" nz-input placeholder="Id">
         </nz-input-group>
       </nz-col>
@@ -106,7 +106,7 @@
         <nz-form-label>Team Name</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-input-group [nzPrefix]="prefixUser">
+        <nz-input-group>
           <input formControlName="teamName" nz-input placeholder="Team Name">
         </nz-input-group>
         <nz-form-explain *ngIf="validateForm.get('teamName').dirty && validateForm.get('teamName').errors">Please
@@ -118,7 +118,7 @@
         <nz-form-label>Team Leader Name</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-input-group [nzPrefix]="prefixUser">
+        <nz-input-group>
           <input formControlName="teamLeaderName" nz-input placeholder="Team Leader Name">
         </nz-input-group>
         <nz-form-explain *ngIf="validateForm.get('teamLeaderName').dirty && validateForm.get('teamLeaderName').errors">Please
