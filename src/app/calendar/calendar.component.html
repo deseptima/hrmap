@@ -2,11 +2,11 @@
   <nz-breadcrumb>
     <nz-breadcrumb-item>
       <a [routerLink]="['../dashboard']">
-        <i nz-icon type="home"></i>Dashboard
+        <i nz-icon type="home"></i>หน้าหลัก
       </a>
     </nz-breadcrumb-item>
     <nz-breadcrumb-item>
-      Calendar
+      จัดการแผนการทำงาน
     </nz-breadcrumb-item>
   </nz-breadcrumb>
   <nz-card [nzExtra]="addTemplate">
@@ -36,28 +36,28 @@
         </nz-select>
       </nz-col>
       <nz-col class="gutter-row" nzSpan="4" nzOffset="12" style="text-align:right;">
-        <button nz-button (click)="showModal()"><i nz-icon type="plus" theme="outline"></i>Add</button>
+        <button nz-button (click)="showModal()"><i nz-icon type="plus" theme="outline"></i>เพิ่ม</button>
       </nz-col>
     </div>
     <!-- <button nz-button>asd</button> -->
   </ng-template>
 </nz-card>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Task: {{calendarModalData.subject}}" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()"
+<nz-modal [(nzVisible)]="isVisible" nzTitle="งาน: {{calendarModalData.subject}}" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()">
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="4">
-      <b>Task:</b>
+      <b>งาน:</b>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="20">
       <nz-input-group>
-        <input [(ngModel)]="calendarModalData.subject" nz-input placeholder="Task Name">
+        <input [(ngModel)]="calendarModalData.subject" nz-input placeholder="ชื่องาน">
       </nz-input-group>
     </nz-col>
   </nz-row>
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="4">
-      <b>Type:</b>
+      <b>ประเภทงาน:</b>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="20">
       <nz-select name="select-error" [(ngModel)]="calendarModalData.type">
@@ -69,7 +69,7 @@
   </nz-row>
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="4">
-      <b>Point:</b>
+      <b>คะแนน:</b>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="20">
       <nz-input-group>
@@ -79,7 +79,7 @@
   </nz-row>
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="4">
-      <b>From:</b>
+      <b>ตั้งแต่:</b>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="8" *ngIf="!calendarModalData.isAllDay" style="width:unset;">
       <nz-date-picker [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="dd-MMM-yyyy" [(ngModel)]="calendarModalData.startDate"
@@ -100,7 +100,7 @@
   </nz-row>
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="4">
-      <b>To:</b>
+      <b>ถึง:</b>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="8" *ngIf="!calendarModalData.isAllDay" style="width:unset;">
       <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime nzFormat="dd-MMM-yyyy" [(ngModel)]="calendarModalData.endDate"
@@ -123,12 +123,12 @@
   </nz-row>
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="12">
-      <label nz-checkbox [(ngModel)]="calendarModalData.isAllDay">All day</label>
+      <label nz-checkbox [(ngModel)]="calendarModalData.isAllDay">ทั้งวัน</label>
     </nz-col>
   </nz-row>
   <nz-row class="pd-row" nzGutter="20">
     <nz-col class="gutter-row" nzSpan="24">
-      <label><b>Description</b></label>
+      <label><b>รายละเอียด</b></label>
     </nz-col>
   </nz-row>
   <nz-row class="pd-row" nzGutter="20">

@@ -157,10 +157,20 @@ export class CalendarComponent {
         }
       });
 
+    } else {
+      this.isVisible = false;
     }
     // console.log(this.calendarModalData==this.sampleData)
     // console.log(this.calendarModalData)
     // console.log(this.sampleData)
+  }
+  dateTH(date: any) {
+    var dateThai
+    date = new Date(date)
+    var month = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "ธค"][date.getMonth()];
+    dateThai = date.getDate() + ' ' + month + date.getFullYear()
+    return dateThai
   }
   onChange(result: any): void {
     // console.log('onChange: ', result);

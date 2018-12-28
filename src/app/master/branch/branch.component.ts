@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,7 +19,7 @@ export class BranchComponent {
     {
       id: 1,
       branchCode: '001',
-      companyCode: '001:Soft Square International Co., Ltd.',
+      companyCode: '001: Soft Square International Co., Ltd.',
       name: 'สาขา รังสิต',
       address: '51/597 หมู่ 7 ตำบล หลักหก อำเภอ เมือง จังหวัด ปทุมธานี'
     }
@@ -28,7 +28,7 @@ export class BranchComponent {
   sortName = null;
   sortValue = null;
   displayData = [...this.data]
-  constructor(private fb: FormBuilder, private modal: NzModalService) { }
+  constructor(private fb: FormBuilder, private modal: NzModalService, elementRef: ElementRef) { }
 
   sort(sort: { key: string, value: string }): void {
     console.log(sort.key + ',' + sort.value)
@@ -53,7 +53,6 @@ export class BranchComponent {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      id: ['002'],
       companyCode: [null, [Validators.required]],
       branchName: [null, [Validators.required]],
       address: [null, [Validators.required]],
@@ -73,8 +72,10 @@ export class BranchComponent {
   handleCancel(): void {
     if (this.validateForm.dirty && this.validateForm.value) {
       this.confirmModal = this.modal.confirm({
-        nzTitle: 'Do you Want to discard these items?',
-        nzContent: 'When clicked the OK button, all items will be discarded',
+        nzTitle: 'ต้องการที่จะละทิ้งสิ่งที่กรอกไปหรือไม่?',
+        nzContent: 'กดตกลงเพื่อละทิ้ง, กดยกเลิกเพื่อกลับเข้าสู่หน้าเดิม',
+        nzOkText: 'ตกลง',
+        nzCancelText: 'ยกเลิก',
         nzOnOk: () => {
           this.isVisible = false;
           this.validateForm.reset()

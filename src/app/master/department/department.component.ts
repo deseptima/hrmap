@@ -53,7 +53,6 @@ export class DepartmentComponent {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      id: ['002'],
       companyCode: [null, [Validators.required]],
       branchCode: [null, [Validators.required]],
       departmentName: [null, [Validators.required]],
@@ -74,8 +73,10 @@ export class DepartmentComponent {
   handleCancel(): void {
     if (this.validateForm.dirty && this.validateForm.value) {
       this.confirmModal = this.modal.confirm({
-        nzTitle: 'Do you Want to discard these items?',
-        nzContent: 'When clicked the OK button, all items will be discarded',
+        nzTitle: 'ต้องการที่จะละทิ้งสิ่งที่กรอกไปหรือไม่?',
+        nzContent: 'กดตกลงเพื่อละทิ้ง, กดยกเลิกเพื่อกลับเข้าสู่หน้าเดิม',
+        nzOkText: 'ตกลง',
+        nzCancelText: 'ยกเลิก',
         nzOnOk: () => {
           this.isVisible = false;
           this.validateForm.reset()

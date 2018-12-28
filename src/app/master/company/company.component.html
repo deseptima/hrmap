@@ -1,28 +1,28 @@
 <nz-breadcrumb>
   <nz-breadcrumb-item>
     <a [routerLink]="['../../dashboard']">
-      <i nz-icon type="home"></i>Dashboard
+      <i nz-icon type="home"></i>หน้าหลัก
     </a>
   </nz-breadcrumb-item>
   <nz-breadcrumb-item>
-    Master Data
+    แฟ้มข้อมูลหลัก
   </nz-breadcrumb-item>
   <nz-breadcrumb-item>
-    Company
+    จัดการข้อมูลบริษัท
   </nz-breadcrumb-item>
 </nz-breadcrumb>
-<nz-card nzTitle="Company Data">
+<nz-card nzTitle="จัดการข้อมูลบริษัท">
   <nz-row nzGutter="16">
     <nz-col class="gutter-row" nzSpan="16" nzOffset="4" nzGutter="8">
       <nz-input-group nzSearch [nzSuffix]="suffixButton">
-        <input type="text" nz-input placeholder="Company Code, Company Name, Address">
+        <input type="text" nz-input placeholder="รหัสบริษัท, ชื่อบริษัท, ที่อยู่">
       </nz-input-group>
       <ng-template #suffixButton>
-        <button nz-button nzType="primary" nzSearch>Search</button>
+        <button nz-button nzType="primary" nzSearch>ค้นหา</button>
       </ng-template>
     </nz-col>
     <nz-col class="gutter-row" nzSpan="4" nzGutter="8" style="text-align:right;">
-      <button nz-button nzType="primary" (click)="isVisible=!isVisible"><i nz-icon type="plus" theme="outline"></i>Add</button>
+      <button nz-button nzType="primary" (click)="isVisible=!isVisible"><i nz-icon type="plus" theme="outline"></i>เพิ่ม</button>
     </nz-col>
   </nz-row>
 
@@ -31,10 +31,10 @@
       <nz-table #basicTable [nzData]="displayData">
         <thead (nzSortChange)="sort($event)" nzSingleSort>
           <tr>
-            <th nzShowSort nzSortKey="companyCode">Company Code</th>
-            <th nzShowSort nzSortKey="name">Company Name</th>
-            <th nzShowSort nzSortKey="address">Address</th>
-            <th>Action</th>
+            <th nzShowSort nzSortKey="companyCode">รหัสบริษัท</th>
+            <th nzShowSort nzSortKey="name">ชื่อบริษัท</th>
+            <th nzShowSort nzSortKey="address">ที่อยู่</th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +43,7 @@
             <td>{{data.name}}</td>
             <td>{{data.address}}</td>
             <td>
-              <a>Delete</a>
+              <button nz-button nzType="danger" nzShape="circle"><i nz-icon type="delete" theme="outline"></i></button>
             </td>
           </tr>
         </tbody>
@@ -53,40 +53,35 @@
 
 </nz-card>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Add Company" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<ng-template #modalFooter>
+  <button nz-button nzType="default" (click)="handleCancel()">ยกเลิก</button>
+  <button nz-button nzType="primary" (click)="handleOk()">ตกลง</button>
+</ng-template>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มบริษัท" (nzOnCancel)="handleCancel()" [nzFooter]="modalFooter">
   <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-row class="pd-row" nzGutter="20">
       <nz-col nzSpan="8">
-        <nz-form-label>ID</nz-form-label>
+        <nz-form-label>ชื่อบริษัท</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
         <nz-input-group>
-          <input formControlName="id" nz-input placeholder="Id">
+          <input formControlName="companyName" nz-input placeholder="ชื่อบริษัท">
         </nz-input-group>
+        <!-- <nz-form-explain *ngIf="validateForm.get('companyName').dirty && validateForm.get('companyName').errors">
+          กรุณากรอกชื่อบริษัท !</nz-form-explain> -->
       </nz-col>
     </nz-row>
     <nz-row class="pd-row" nzGutter="20">
       <nz-col nzSpan="8">
-        <nz-form-label>Company Name</nz-form-label>
+        <nz-form-label>ที่อยู่</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
         <nz-input-group>
-          <input formControlName="companyName" nz-input placeholder="Company Name">
+          <input formControlName="address" nz-input placeholder="ที่อยู่">
         </nz-input-group>
-        <nz-form-explain *ngIf="validateForm.get('companyName').dirty && validateForm.get('companyName').errors">Please
-          input Company Name!</nz-form-explain>
-      </nz-col>
-    </nz-row>
-    <nz-row class="pd-row" nzGutter="20">
-      <nz-col nzSpan="8">
-        <nz-form-label>Address</nz-form-label>
-      </nz-col>
-      <nz-col nzSpan="16">
-        <nz-input-group>
-          <input formControlName="address" nz-input placeholder="Address">
-        </nz-input-group>
-        <nz-form-explain *ngIf="validateForm.get('address').dirty && validateForm.get('address').errors">Please
-          input Address!</nz-form-explain>
+        <!-- <nz-form-explain *ngIf="validateForm.get('address').dirty && validateForm.get('address').errors">
+          กรุณากรอกที่อยู่ !</nz-form-explain> -->
       </nz-col>
     </nz-row>
   </form>

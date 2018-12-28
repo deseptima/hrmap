@@ -3,7 +3,8 @@ import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html'
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.less']
 })
 export class DashboardComponent {
   gridStyle = {

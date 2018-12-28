@@ -22,53 +22,53 @@
 <nz-breadcrumb>
   <nz-breadcrumb-item>
     <a [routerLink]="['../dashboard']">
-      <i nz-icon type="home"></i>Dashboard
+      <i nz-icon type="home"></i>หน้าหลัก
     </a>
   </nz-breadcrumb-item>
   <nz-breadcrumb-item>
-    Report
+    ออกรายงาน
   </nz-breadcrumb-item>
 </nz-breadcrumb>
-<nz-card nzTitle="Report">
+<nz-card nzTitle="ออกรายงาน">
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Employee Code</nz-form-label>
+      <nz-form-label [nzSpan]="7" nzRequired>รหัสพนักงาน</nz-form-label>
       <nz-form-control [nzSpan]="12">
-        <input nz-input formControlName="employeeCode" placeholder="Employee Code">
+        <input nz-input formControlName="employeeCode" placeholder="รหัสพนักงาน">
         <nz-form-explain *ngIf="validateForm.get('employeeCode').dirty && validateForm.get('employeeCode').errors">
           <ng-container *ngIf="validateForm.get('employeeCode').hasError('required')">
-            Please input Employee Code!
+            กรุณากรอกรหัสพนักงาน !
           </ng-container>
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Employee Name</nz-form-label>
+      <nz-form-label [nzSpan]="7" nzRequired>ชื่อพนักงาน</nz-form-label>
       <nz-form-control [nzSpan]="12">
-        <input nz-input formControlName="employeeName" placeholder="Employee Name">
+        <input nz-input formControlName="employeeName" placeholder="ชื่อพนักงาน">
         <nz-form-explain *ngIf="validateForm.get('employeeName').dirty && validateForm.get('employeeName').errors">
           <ng-container *ngIf="validateForm.get('employeeName').hasError('required')">
-            Please input Employee Name!
+            กรุณากรอกชื่อพนักงาน !
           </ng-container>
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Start Date</nz-form-label>
+      <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>วันที่เริ่มต้น</nz-form-label>
       <nz-form-control [nzSm]="12" [nzXs]="24">
-        <nz-date-picker formControlName="startDate"></nz-date-picker>
+        <nz-date-picker formControlName="startDate" nzPlaceHolder="วันที่เริ่มต้น"></nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>End Date</nz-form-label>
+      <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>วันที่สิ้นสุด</nz-form-label>
       <nz-form-control [nzSm]="12" [nzXs]="24">
-        <nz-date-picker formControlName="endDate"></nz-date-picker>
+        <nz-date-picker formControlName="endDate" nzPlaceHolder="วันที่สิ้นสุด"></nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-control [nzOffset]="7" [nzSpan]="12">
-        <button nz-button nzType="primary" [disabled]="!validateForm.valid">Print</button>
-        <button nz-button (click)="resetForm($event)">Reset</button>
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid">พิมพ์รายงาน</button>
+        <button nz-button (click)="resetForm($event)">ล้าง</button>
       </nz-form-control>
     </nz-form-item>
   </form>
