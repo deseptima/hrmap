@@ -18,6 +18,8 @@ import { ReportComponent } from './report/report.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AskQuestionComponent } from './ask-question/ask-question.component';
 import { MasterModule } from './master/master.module'
+import { AuthService } from './service/auth.service';
+import { CookieService, CookieModule } from 'ngx-cookie';
 
 registerLocaleData(en);
 
@@ -38,11 +40,12 @@ registerLocaleData(en);
     ReactiveFormsModule,
     HttpClientModule,
     NgZorroAntdModule,
+    CookieModule.forRoot(),
 
     AppRoutingModule,
     MasterModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }, NzFormItemComponent],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, NzFormItemComponent, AuthService, CookieService],
   bootstrap: [AppComponent],
   exports: [
     RouterModule,
