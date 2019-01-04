@@ -10,7 +10,7 @@ import { CompanyComponent } from './company/company.component'
 import { DepartmentComponent } from './department/department.component'
 import { EmployeeComponent } from './employee/employee.component'
 import { TeamComponent } from './team/team.component'
-
+import { SupplyComponent } from './supply/supply.component'
 
 @NgModule({
   declarations: [
@@ -19,16 +19,19 @@ import { TeamComponent } from './team/team.component'
     DepartmentComponent,
     EmployeeComponent,
     TeamComponent,
+    SupplyComponent,
   ],
   imports: [
     MasterRoutingModule,
 
+    FormsModule,
+    ReactiveFormsModule,
     NgZorroAntdModule,
     CommonModule
   ],
   exports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class MasterModule { }

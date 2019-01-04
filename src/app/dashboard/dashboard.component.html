@@ -1,12 +1,99 @@
-<nz-card nzTitle="Master Data">
-  <div nz-card-grid [ngStyle]="gridStyle">Company</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Branch</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Department</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Team</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Employee</div>
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon type="home"></i>หน้าหลัก
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<nz-card nzTitle="แฟ้มข้อมูลหลัก">
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/company')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="copyright"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>จัดการข้อมูลบริษัท</span>
+      </div>
+    </div>
+  </div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/branch')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="branches"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>จัดการข้อมูลสาขา</span>
+      </div>
+    </div>
+  </div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/department')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="hdd"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>จัดการข้อมูลแผนก</span>
+      </div>
+    </div>
+  </div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/team')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="team"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>จัดการข้อมูลทีม</span>
+      </div>
+    </div>
+  </div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/employee')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="user"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>จัดการข้อมูลพนักงาน</span>
+      </div>
+    </div>
+  </div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/supply')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="desktop"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>จัดการข้อมูลทรัพยากรและอุปกรณ์</span>
+      </div>
+    </div>
+  </div>
 </nz-card>
-<nz-card nzTitle="Other Menu">
-  <div nz-card-grid [ngStyle]="gridStyle">Calendar</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Inquiry</div>
-  <div nz-card-grid [ngStyle]="gridStyle">Report</div>
+<nz-card nzTitle="เมนูอื่น">
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/calendar')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="calendar"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>จัดการแผนการทำงาน</span>
+      </div>
+    </div>
+  </div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/ask-question')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="question-circle"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>ระบบสอบถาม</span>
+      </div>
+    </div>
+  </div>
+  <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/report')">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="10">
+        <i nz-icon type="file"></i>
+      </div>
+      <div nz-col nzSpan="14">
+        <span>ออกรายงาน</span>
+      </div>
+    </div>
+  </div>
 </nz-card>

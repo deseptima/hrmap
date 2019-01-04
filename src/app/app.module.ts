@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ElementRef } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgZorroAntdModule, NZ_I18N, en_US, zh_CN } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NZ_I18N, en_US, zh_CN, NzFormItemComponent } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import { RouterModule } from '@angular/router'
 import en from '@angular/common/locales/en';
@@ -16,7 +16,10 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { NormalComponent } from './layout/normal/normal.component';
 import { ReportComponent } from './report/report.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AskQuestionComponent } from './ask-question/ask-question.component';
 import { MasterModule } from './master/master.module'
+import { AuthService } from './service/auth.service';
+import { CookieService, CookieModule } from 'ngx-cookie';
 
 registerLocaleData(en);
 
@@ -27,7 +30,8 @@ registerLocaleData(en);
     CalendarComponent,
     NormalComponent,
     ReportComponent,
-    DashboardComponent
+    DashboardComponent,
+    AskQuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -36,11 +40,12 @@ registerLocaleData(en);
     ReactiveFormsModule,
     HttpClientModule,
     NgZorroAntdModule,
+    CookieModule.forRoot(),
 
     AppRoutingModule,
     MasterModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, NzFormItemComponent, AuthService, CookieService],
   bootstrap: [AppComponent],
   exports: [
     RouterModule,

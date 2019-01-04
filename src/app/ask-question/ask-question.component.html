@@ -1,0 +1,65 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['../dashboard']">
+      <i nz-icon type="home"></i>หน้าหลัก
+    </a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    ระบบสอบถาม
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<nz-card nzTitle="ระบบสอบถาม">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>ผู้ส่ง</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="sender" placeholder="ชื่อผู้ส่ง">
+        <nz-form-explain *ngIf="validateForm.get('sender').dirty && validateForm.get('sender').errors">
+          <ng-container *ngIf="validateForm.get('sender').hasError('required')">
+            กรุณากรอกชื่อผู้ส่ง !
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>หัวข้อ</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="topic" placeholder="หัวข้อ">
+        <nz-form-explain *ngIf="validateForm.get('topic').dirty && validateForm.get('topic').errors">
+          <ng-container *ngIf="validateForm.get('topic').hasError('required')">
+            กรุณากรอกหัวข้อ !
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="email" placeholder="email" type="email">
+        <nz-form-explain *ngIf="validateForm.get('email').dirty&&validateForm.get('email').errors">
+          <ng-container *ngIf="validateForm.get('email').hasError('email')">
+            The input is not valid E-mail!
+          </ng-container>
+          <ng-container *ngIf="validateForm.get('email').hasError('required')">
+            Please input your E-mail!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item> -->
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>รายละเอียด</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <textarea formControlName="description" nz-input rows="5" placeholder=""></textarea>
+        <nz-form-explain *ngIf="validateForm.get('description').dirty&&validateForm.get('description').hasError('required')">
+          กรุณากรอกรายละเอียด !</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid">ส่ง</button>
+        <button nz-button (click)="resetForm($event)">ล้าง</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+</nz-card>

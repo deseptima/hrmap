@@ -1,63 +1,39 @@
 <nz-layout class="layout">
-  <nz-header style="position:fixed;width:100%;z-index: 900;box-shadow: 0 2px 12px 0 #dfe3eb;">
-    <i class="menu-drawer-icon" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'" theme="outline" (click)="isCollapsed=!isCollapsed"></i>
+  <nz-header style="position:fixed;width:100%;z-index: 900;">
+    <div nz-col nzSpan="4">
+      <i class="menu-drawer-icon" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'" (click)="isCollapsed=!isCollapsed"></i>
+    </div>
+    <div nz-col nzSpan="20" style="text-align:right;">
+      <b style="color:white;">
+        <i nz-icon type="user" theme="outline"></i>ผู้จัดการระบบ
+      </b>
+    </div>
   </nz-header>
-  <nz-drawer [nzClosable]="false" [nzVisible]="isCollapsed" nzPlacement="left" (nzOnClose)="close()">
-    <nz-row class="menu-drawer" (click)="close()"><label>Close</label></nz-row>
-    <nz-row class="menu-drawer" (click)="route('/dashboard')"><label>Dashboard</label></nz-row>
-    <nz-row class="menu-drawer" (click)="route('/calendar')"><label>Calendar</label></nz-row>
-    <nz-row class="menu-drawer" (click)="route('/report')"><label>Report</label></nz-row>
-    <nz-row class="menu-drawer" (click)="logout()"><label>Log out</label></nz-row>
-  </nz-drawer>
-  <nz-layout style="padding:6rem 1rem 1rem 1rem">
-    <nz-content style="background:#fff; padding: 24px; min-height: 280px;">
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate" style="width:110%;z-index: 800;height: 100vh;">
+    <ul [nzTheme]=" 'dark'" nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" style="margin-top:64px;">
+      <li nz-submenu>
+        <span title (click)="route('/dashboard')"><i nz-icon type="folder-open"></i><span class="nav-text">หน้าหลัก</span></span>
+        <ul>
+          <li nz-menu-item (click)="route('/master/company')">จัดการข้อมูลบริษัท</li>
+          <li nz-menu-item (click)="route('/master/branch')">จัดการข้อมูลสาขา</li>
+          <li nz-menu-item (click)="route('/master/department')">จัดการข้อมูลแผนก</li>
+          <li nz-menu-item (click)="route('/master/team')">จัดการข้อมูลทีม</li>
+          <li nz-menu-item (click)="route('/master/employee')">จัดการข้อมูลพนักงาน</li>
+          <li nz-menu-item (click)="route('/master/supply')">จัดการข้อมูลทรัพยากรอุปกรณ์</li>
+        </ul>
+      </li>
+      <li nz-menu-item (click)="route('/calendar')"><span><i nz-icon type="calendar"></i><span class="nav-text">จัดการแผนการทำงาน</span></span></li>
+      <li nz-menu-item (click)="route('/ask-question')"><span><i nz-icon type="question-circle"></i><span class="nav-text">ระบบสอบถาม</span></span></li>
+      <li nz-menu-item (click)="route('/report')"><span><i nz-icon type="file"></i><span class="nav-text">ออกรายงาน</span></span></li>
+      <li nz-menu-item (click)="logout()"><span><i nz-icon type="unlock"></i><span class="nav-text">ออกจากระบบ</span></span></li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-content style="background:#fff; padding: 16px 24px 24px 24px; min-height: 280px;margin-top:64px;">
       <div class="container-fluid">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
   </nz-layout>
-  <nz-footer style="text-align: center;">Copyright © 2018 DOLAWS Co.Ltd,. All rights reserved.</nz-footer>
+  <!-- <nz-footer style="text-align: center;">Copyright © 2018 DOLAWS Co.Ltd,. All rights reserved.</nz-footer> -->
 </nz-layout>
-
-<!-- <nz-layout>
-  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate">
-    <div class="logo">
-    </div>
-    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu>
-        <span title><i nz-icon type="user"></i><span class="nav-text">User</span></span>
-        <ul>
-          <li nz-menu-item>Tom</li>
-          <li nz-menu-item>Bill</li>
-          <li nz-menu-item>Alex</li>
-        </ul>
-      </li>
-      <li nz-submenu>
-        <span title><i nz-icon type="team"></i><span class="nav-text">Team</span></span>
-        <ul>
-          <li nz-menu-item>Team 1</li>
-          <li nz-menu-item>Team 2</li>
-        </ul>
-      </li>
-      <li nz-menu-item><span><i nz-icon type="file"></i><span class="nav-text">File</span></span></li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
-    <nz-header style="background: #fff; padding:0;">
-      <i class="trigger" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'" (click)="isCollapsed=!isCollapsed"></i>
-    </nz-header>
-    <nz-content style="margin:0 16px;">
-      <nz-breadcrumb style="margin:16px 0;">
-        <nz-breadcrumb-item>User</nz-breadcrumb-item>
-        <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-      </nz-breadcrumb>
-      <div style="padding:24px; background: #fff; min-height: 360px;">
-        Bill is a cat.
-      </div>
-    </nz-content>
-    <nz-footer style="text-align: center;">Ant Design ©2017 Implement By Angular</nz-footer>
-  </nz-layout>
-</nz-layout>
-<ng-template #trigger>
-  <i nz-icon type="up"></i>
-</ng-template> -->

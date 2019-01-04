@@ -17,16 +17,16 @@ export class NormalComponent {
   }
 
   constructor(
-    private router: Router,) {
+    private router: Router, ) {
   }
 
   close() {
     this.isCollapsed = false
   }
 
-  route(link:any){
+  route(link: any) {
     this.router.navigateByUrl(link)
-    this.isCollapsed = false
+    // this.isCollapsed = false
 
   }
 

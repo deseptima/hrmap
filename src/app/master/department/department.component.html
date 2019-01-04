@@ -1,24 +1,108 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['../../dashboard']">
+      <i nz-icon type="home"></i>หน้าหลัก
+    </a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    แฟ้มข้อมูลหลัก
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    จัดการข้อมูลแผนก
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<nz-card nzTitle="จัดการข้อมูลแผนก">
+  <nz-row nzGutter="16">
+    <nz-col class="gutter-row" nzSpan="16" nzOffset="4" nzGutter="8">
+      <nz-input-group nzSearch [nzSuffix]="suffixButton">
+        <input type="text" nz-input placeholder="รหัสแผนก, รหัสบริษัท, รหัสสาขา, ชื่อแผนก, ใช้งาน">
+      </nz-input-group>
+      <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch>ค้นหา</button>
+      </ng-template>
+    </nz-col>
+    <nz-col class="gutter-row" nzSpan="4" nzGutter="8" style="text-align:right;">
+      <button nz-button nzType="primary" (click)="isVisible=!isVisible"><i nz-icon type="plus" theme="outline"></i>เพิ่ม</button>
+    </nz-col>
+  </nz-row>
 
-    <nz-table #basicTable [nzData]="dataSet">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Address</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of basicTable.data">
-          <td>{{data.name}}</td>
-          <td>{{data.age}}</td>
-          <td>{{data.address}}</td>
-          <td>
-            <a>Action 一 {{data.name}}</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a>Delete</a>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
-  
+  <nz-row>
+    <nz-col nzSpan="24">
+      <nz-table #basicTable [nzData]="displayData">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+          <tr>
+            <th nzShowSort nzSortKey="departmentCode">รหัสแผนก</th>
+            <th nzShowSort nzSortKey="companyCode">รหัสบริษัท</th>
+            <th nzShowSort nzSortKey="branchCode">รหัสสาขา</th>
+            <th nzShowSort nzSortKey="name">ชื่อแผนก</th>
+            <th nzShowSort nzSortKey="active">ใช้งาน</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of displayData">
+            <td>{{data.departmentCode}}</td>
+            <td>{{data.companyCode}}</td>
+            <td>{{data.branchCode}}</td>
+            <td>{{data.name}}</td>
+            <td><span nz-checkbox [(ngModel)]="data.active" [nzDisabled]="true"></span></td>
+            <td>
+              <button nz-button nzType="danger" nzShape="circle"><i nz-icon type="delete" theme="outline"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-col>
+  </nz-row>
+
+</nz-card>
+<ng-template #modalFooter>
+  <button nz-button nzType="default" (click)="handleCancel()">ยกเลิก</button>
+  <button nz-button nzType="primary" (click)="handleOk()">ตกลง</button>
+</ng-template>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มแผนก" (nzOnCancel)="handleCancel()" [nzFooter]="modalFooter">
+  <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>รหัสบริษัท</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-select name="select-error" formControlName="companyCode" [ngModel]="'001'">
+          <nz-option nzValue="001" nzLabel="001: Soft Square International Co., Ltd."></nz-option>
+        </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>รหัสสาขา</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-select name="select-error" formControlName="branchCode" [ngModel]="'001'">
+          <nz-option nzValue="001" nzLabel="001: สาขา รังสิต"></nz-option>
+        </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>ชื่อแผนก</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-group>
+          <input formControlName="departmentName" nz-input placeholder="Department Name">
+        </nz-input-group>
+        <!-- <nz-form-explain *ngIf="validateForm.get('departmentName').dirty && validateForm.get('departmentName').errors">Please
+          input Department Name!</nz-form-explain> -->
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+      </nz-col>
+      <nz-col nzSpan="16">
+        <label nz-checkbox formControlName="active">
+          <span>ใช้งาน</span>
+        </label>
+      </nz-col>
+    </nz-row>
+  </form>
+</nz-modal>

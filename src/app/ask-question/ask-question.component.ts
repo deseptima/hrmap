@@ -7,20 +7,20 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
-import { Router } from "@angular/router";
+import { Observable, Observer } from 'rxjs';
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.less']
+  selector: 'app-ask-question',
+  templateUrl: './ask-question.component.html',
+  styleUrls: ['./ask-question.component.less']
 })
-export class ReportComponent {
+export class AskQuestionComponent{
   validateForm: FormGroup;
   submitForm = ($event, value) => {
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsDirty();
-      this.validateForm.controls[key].updateValueAndValidity();
+      this.validateForm.controls[ key ].markAsDirty();
+      this.validateForm.controls[ key ].updateValueAndValidity();
     }
     console.log(value);
   };
@@ -29,12 +29,12 @@ export class ReportComponent {
     e.preventDefault();
     this.validateForm.reset();
     for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsPristine();
-      this.validateForm.controls[key].updateValueAndValidity();
+      this.validateForm.controls[ key ].markAsPristine();
+      this.validateForm.controls[ key ].updateValueAndValidity();
     }
   }
 
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
+  confirmValidator = (control: FormControl): { [ s: string ]: boolean } => {
     if (!control.value) {
       return { required: true };
     } else if (control.value !== this.validateForm.controls.password.value) {
@@ -44,10 +44,10 @@ export class ReportComponent {
 
   constructor(private fb: FormBuilder) {
     this.validateForm = this.fb.group({
-      employeeCode: ['', [Validators.required]],
-      employeeName: ['', [Validators.required]],
-      startDate: ['', [Validators.required]],
-      endDate: ['', [Validators.required]],
+      sender: ['', [Validators.required]],
+      topic: [ '', [ Validators.required ] ],
+      // email   : [ '', [ Validators.email, Validators.required ] ],
+      description : [ '', [ Validators.required ] ]
     });
   }
 }

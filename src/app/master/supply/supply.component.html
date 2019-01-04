@@ -8,14 +8,14 @@
     แฟ้มข้อมูลหลัก
   </nz-breadcrumb-item>
   <nz-breadcrumb-item>
-    จัดการข้อมูลทีม
+    จัดการข้อมูลทรัพยากรอุปกรณ์
   </nz-breadcrumb-item>
 </nz-breadcrumb>
-<nz-card nzTitle="จัดการข้อมูลทีม">
+<nz-card nzTitle="จัดการข้อมูลทรัพยากรอุปกรณ์">
   <nz-row nzGutter="16">
     <nz-col class="gutter-row" nzSpan="16" nzOffset="4" nzGutter="8">
       <nz-input-group nzSearch [nzSuffix]="suffixButton">
-        <input type="text" nz-input placeholder="รหัสทีม, รหัสบริษัท, รหัสสาขา, รหัสแผนก, ชื่อทีม, หัวหน้าทีม">
+        <input type="text" nz-input placeholder="รหัสทรัพยากรอุปกรณ์, รหัสบริษัท, รหัสสาขา, รหัสทีม, ชื่อทรัพยากรอุปกรณ์, ประเภทอุปกรณ์">
       </nz-input-group>
       <ng-template #suffixButton>
         <button nz-button nzType="primary" nzSearch>ค้นหา</button>
@@ -31,23 +31,21 @@
       <nz-table #basicTable [nzData]="displayData">
         <thead (nzSortChange)="sort($event)" nzSingleSort>
           <tr>
-            <th nzShowSort nzSortKey="teamCode">รหัสทีม</th>
+            <th nzShowSort nzSortKey="supplyCode">รหัสทรัพยากรอุปกรณ์</th>
             <th nzShowSort nzSortKey="companyCode">รหัสบริษัท</th>
             <th nzShowSort nzSortKey="branchCode">รหัสสาขา</th>
-            <th nzShowSort nzSortKey="departmentCode">รหัสแผนก</th>
-            <th nzShowSort nzSortKey="name">ชื่อทีม</th>
-            <th nzShowSort nzSortKey="teamLeader">หัวหน้าทีม</th>
+            <th nzShowSort nzSortKey="supplyName">ชื่อทรัพยากรอุปกรณ์</th>
+            <th nzShowSort nzSortKey="category">ประเภทอุปกรณ์</th>
             <th> </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of displayData">
-            <td>{{data.teamCode}}</td>
+            <td>{{data.supplyCode}}</td>
             <td>{{data.companyCode}}</td>
             <td>{{data.branchCode}}</td>
-            <td>{{data.departmentCode}}</td>
-            <td>{{data.name}}</td>
-            <td>{{data.teamLeader}}</td>
+            <td>{{data.supplyName}}</td>
+            <td>{{data.category}}</td>
             <td>
               <button nz-button nzType="danger" nzShape="circle"><i nz-icon type="delete" theme="outline"></i></button>
             </td>
@@ -63,7 +61,7 @@
   <button nz-button nzType="primary" (click)="handleOk()">ตกลง</button>
 </ng-template>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มทีม" (nzOnCancel)="handleCancel()" [nzFooter]="modalFooter">
+<nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มทรัพยากรอุปกรณ์" (nzOnCancel)="handleCancel()" [nzFooter]="modalFooter">
   <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-row class="pd-row" nzGutter="20">
       <nz-col nzSpan="8">
@@ -87,36 +85,42 @@
     </nz-row>
     <nz-row class="pd-row" nzGutter="20">
       <nz-col nzSpan="8">
-        <nz-form-label>รหัสแผนก</nz-form-label>
+        <nz-form-label>ประเภทอุปกรณ์</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-select name="select-error" formControlName="departmentCode" [ngModel]="'001'">
-          <nz-option nzValue="001" nzLabel="001: Java Application"></nz-option>
+        <nz-select name="select-error" formControlName="category" [ngModel]="'001'">
+          <nz-option nzValue="001" nzLabel="001: อุปกรณ์อิเล็กทรอนิกส์"></nz-option>
+          <nz-option nzValue="002" nzLabel="002: อุปกรณ์อำนวยความสะดวก"></nz-option>
         </nz-select>
       </nz-col>
     </nz-row>
     <nz-row class="pd-row" nzGutter="20">
       <nz-col nzSpan="8">
-        <nz-form-label>ชื่อทีม</nz-form-label>
+        <nz-form-label>ชื่อทรัพยากรอุปกรณ์</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
         <nz-input-group>
-          <input formControlName="teamName" nz-input placeholder="ชื่อทีม">
+          <input formControlName="supplyName" nz-input placeholder="ชื่อทรัพยากรอุปกรณ์">
         </nz-input-group>
-        <!-- <nz-form-explain *ngIf="validateForm.get('teamName').dirty && validateForm.get('teamName').errors">
-          กรุณากรอกชื่อทีม !</nz-form-explain> -->
+        <!-- <nz-form-explain *ngIf="validateForm.get('supplyName').dirty && validateForm.get('supplyName').errors">
+          กรุณากรอกชื่อทรัพยากรอุปกรณ์ !</nz-form-explain> -->
       </nz-col>
     </nz-row>
     <nz-row class="pd-row" nzGutter="20">
       <nz-col nzSpan="8">
-        <nz-form-label>ชื่อหัวหน้าทีม</nz-form-label>
+        <nz-form-label>รายละเอียด</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-input-group>
-          <input formControlName="teamLeaderName" nz-input placeholder="ชื่อหัวหน้าทีม">
-        </nz-input-group>
-        <!-- <nz-form-explain *ngIf="validateForm.get('teamLeaderName').dirty && validateForm.get('teamLeaderName').errors">
-          กรุณากรอกชื่อหัวหน้าทีม !</nz-form-explain> -->
+        <nz-date-picker formControlName="date" (ngModelChange)="onChange($event)" nzPlaceHolder="วันที่ซื้อ"></nz-date-picker>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>ราคา/หน่วย</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-number formControlName="price" [(ngModel)]="demoValue" [nzMin]="0" [nzFormatter]="formatterDollar"
+          [nzParser]="parserDollar"></nz-input-number>
       </nz-col>
     </nz-row>
   </form>

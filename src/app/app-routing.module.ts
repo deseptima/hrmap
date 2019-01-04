@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Route } from './layout/route.service'
 import { ReportComponent } from './report/report.component';
+import { AskQuestionComponent } from './ask-question/ask-question.component';
 import { MasterModule } from './master/master.module'
 
 export const router: Routes = [
@@ -15,6 +16,7 @@ export const router: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'report', component: ReportComponent },
     { path: 'master', loadChildren: () => MasterModule },
+    { path: 'ask-question', component: AskQuestionComponent },
   ]),
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];

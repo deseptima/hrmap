@@ -7,24 +7,38 @@ import {
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 
 @Component({
-  selector: 'master-team',
-  templateUrl: './team.component.html'
+  selector: 'master-supply',
+  templateUrl: './supply.component.html'
 })
-export class TeamComponent {
+export class SupplyComponent {
   validateForm: FormGroup;
   confirmModal: NzModalRef;
   isVisible = false
+  date = null; // new Date();
   data = [
     {
       id: 1,
-      teamCode: '001',
+      supplyCode: '001',
       companyCode: '001: Soft Square International Co., Ltd.',
       branchCode: '001: สาขา รังสิต',
-      departmentCode: '001: Java Application',
-      name: 'ทีมพี่บอย',
-      teamLeader: 'พี่บอย'
+      supplyName: 'โต๊ะ',
+      category: 'อุปกรณ์อำนวยความสะดวก'
+    },
+    {
+      id: 2,
+      supplyCode: '002',
+      companyCode: '001: Soft Square International Co., Ltd.',
+      branchCode: '001: สาขา รังสิต',
+      supplyName: 'คอมพิวเตอร์',
+      category: 'อุปกรณ์อิเล็กทรอนิกส์'
     },
   ];
+  demoValue = 100;
+  formatterPercent = value => `${value} %`;
+  parserPercent = value => value.replace(' %', '');
+  formatterDollar = value => `${value} Baht`;
+  parserDollar = value => value.replace('Baht ', '');
+
 
   sortName = null;
   sortValue = null;
@@ -56,9 +70,10 @@ export class TeamComponent {
     this.validateForm = this.fb.group({
       companyCode: [null, [Validators.required]],
       branchCode: [null, [Validators.required]],
-      departmentCode: [null, [Validators.required]],
-      teamName: [null, [Validators.required]],
-      teamLeaderName: [null, [Validators.required]],
+      supplyName: [null, [Validators.required]],
+      category: [null, [Validators.required]],
+      date: [null, [Validators.required]],
+      price: [0, [Validators.required]],
     });
   }
   submitForm(): void {
@@ -88,5 +103,8 @@ export class TeamComponent {
       this.isVisible = false;
       this.validateForm.reset()
     }
+  }
+  onChange(result: Date): void {
+    console.log('onChange: ', result);
   }
 }

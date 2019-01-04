@@ -6,6 +6,7 @@ import { CompanyComponent } from './company/company.component'
 import { DepartmentComponent } from './department/department.component'
 import { EmployeeComponent } from './employee/employee.component'
 import { TeamComponent } from './team/team.component'
+import { SupplyComponent } from './supply/supply.component'
 
 // routedComponents
 
@@ -15,6 +16,7 @@ export const router: Routes = [
   { path: 'department', component: DepartmentComponent },
   { path: 'employee', component: EmployeeComponent },
   { path: 'team', component: TeamComponent },
+  { path: 'supply', component: SupplyComponent },
   // { path: '**', redirectTo: 'account', pathMatch: 'full' },
 ];
 

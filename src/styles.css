@@ -11,3 +11,12 @@
 .ant-modal-header {
   text-align: center;
 }
+nz-row{
+  padding-bottom: 1%;
+}
+
+.ant-card-extra {
+  width: 100%;
+  margin-left: unset;
+  text-align: unset;
+}
