@@ -51,7 +51,7 @@ export class AuthService {
     };
     const body = `username=${u}&password=${p}`;
     console.log(localStorage.getItem('XSRF-TOKEN'))
-    return this.http.post<any>('http://localhost:8080/hrmap/login', body, httpOptions)
+    return this.http.post<any>('http://localhost:8080/almn/login', body, httpOptions)
     // .pipe(map((res: Token) => {
     //   console.log('a')
     //   if (res.access_token) {
@@ -69,7 +69,7 @@ export class AuthService {
   }
 
   getCsrfToken() {
-    return this.http.get<any>('http://localhost:8080/hrmap/csrf').subscribe((csrf) => {
+    return this.http.get<any>('http://localhost:8080/almn/csrf').subscribe((csrf) => {
       if (csrf.delegate) {
         this.csrfToken = csrf.delegate;
       } else {

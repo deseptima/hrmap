@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.authService.login((this.validateForm.controls.userName).toString(), (this.validateForm.controls.password).toString())
     // this.authService.login('admin','admin')
     // console.log(localStorage.getItem('currentUser'))
-    // this.router.navigateByUrl("/calendar")
+    this.router.navigateByUrl("/calendar")
   }
   ngAfterViewInit() {
     this.authService.getCsrfToken();
