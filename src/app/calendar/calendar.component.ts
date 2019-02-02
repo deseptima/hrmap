@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { HttpService } from '../service/http-service.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-calendar',
@@ -8,7 +11,29 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
   styleUrls: ['./calendar.component.less']
 })
 export class CalendarComponent {
-  constructor(private datepipe: DatePipe, private modal: NzModalService) {
+  clientId: 1
+  details: "Test Description"
+  endDate: "2018-11-22T00:00:00"
+  endTime: "16:00:00"
+  id: 2
+  isAllDay: true
+  location: "Siam Paragon"
+  priority: "High"
+  requirementId: 10131
+  servicePersonId: 1
+  startDate: "2018-11-20T00:00:00"
+  startTime: "13:00:00"
+  subject: "Appointment to check case"
+  type: "Appointment"
+  title: Array<any> = [];
+  public form: FormGroup;
+  constructor(private datepipe: DatePipe,
+    private modal: NzModalService,
+    private httpService: HttpService,
+    private router: Router, ) {
+    this.form = new FormGroup({
+      data: new FormControl('')
+    });
 
   }
   isVisible = false
@@ -64,20 +89,12 @@ export class CalendarComponent {
     }
     return null;
   }
-  clientId: 1
-  details: "Test Description"
-  endDate: "2018-11-22T00:00:00"
-  endTime: "16:00:00"
-  id: 2
-  isAllDay: true
-  location: "Siam Paragon"
-  priority: "High"
-  requirementId: 10131
-  servicePersonId: 1
-  startDate: "2018-11-20T00:00:00"
-  startTime: "13:00:00"
-  subject: "Appointment to check case"
-  type: "Appointment"
+
+  ngOnInit() {
+
+
+  }
+
   showModal(id?: any): void {
     this.isVisible = true;
     // console.log(id)
@@ -87,6 +104,24 @@ export class CalendarComponent {
       this.calendarModalData.endDate = new Date(this.dataSetMontly[id - 1].endDate)
       this.calendarModalData.point = 1
     }
+    const dataToLoadPage = {
+      'loadPage': this.form.value
+    };
+    console.info(this.router.url.split('/')[1]);
+    this.httpService.search('dashboard', 'LoadPageHtml', dataToLoadPage).subscribe(
+      data => {
+        const responds = data.json();
+        if (responds.success) {
+          this.title = responds;
+          // this.form = data.json().data.item;
+          console.info(this.title);
+        } else {
+          console.info('Load Error');
+        }
+      },
+      err => {
+        console.info(err);
+      });
     // this.calendarModalData.subject = this.subject
     // this.calendarModalData.startDate = new Date(this.startDate)
     // this.startTime = this.startTime
