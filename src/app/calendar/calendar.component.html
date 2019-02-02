@@ -1,47 +1,45 @@
-<nz-card>
-  <nz-breadcrumb>
-    <nz-breadcrumb-item>
-      <a [routerLink]="['../dashboard']">
-        <i nz-icon type="home"></i>หน้าหลัก
-      </a>
-    </nz-breadcrumb-item>
-    <nz-breadcrumb-item>
-      จัดการแผนการทำงาน
-    </nz-breadcrumb-item>
-  </nz-breadcrumb>
-  <nz-card [nzExtra]="addTemplate">
-    <nz-calendar [(ngModel)]="selectedValue">
-      <ul *nzDateCell="let date" class="events">
-        <ng-container [ngSwitch]="date">
-          <ng-container *ngSwitchCase="date">
-            <li *ngFor="let item of dataSetMontly">
-              <div *ngIf="item.date == date">
-                <!-- <nz-badge [nzStatus]="item.type" [nzText]="item.data" (click)="showModal(item.id)"></nz-badge> -->
-                <label (click)="showModal(item.id)">
-                  {{item.data}}
-                </label>
-              </div>
-            </li>
-          </ng-container>
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['../dashboard']">
+      <i nz-icon type="home"></i>หน้าหลัก
+    </a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    จัดการแผนการทำงาน
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<nz-card [nzExtra]="addTemplate">
+  <nz-calendar [(ngModel)]="selectedValue">
+    <ul *nzDateCell="let date" class="events">
+      <ng-container [ngSwitch]="date">
+        <ng-container *ngSwitchCase="date">
+          <li *ngFor="let item of dataSetMontly">
+            <div *ngIf="item.date == date">
+              <!-- <nz-badge [nzStatus]="item.type" [nzText]="item.data" (click)="showModal(item.id)"></nz-badge> -->
+              <label (click)="showModal(item.id)">
+                {{item.data}}
+              </label>
+            </div>
+          </li>
         </ng-container>
-      </ul>
-    </nz-calendar>
-  </nz-card>
-  <ng-template #addTemplate>
-    <div nz-row nzGutter="20">
-      <nz-col class="gutter-row" nzSpan="8" style="text-align:left;">
-        <nz-select name="select-error" [ngModel]="selectEmployee" (ngModelChange)="onChange($event)">
-          <nz-option nzValue="1" nzLabel="001: ยศกร บางทิพย์"></nz-option>
-          <nz-option nzValue="2" nzLabel="002: ศุภณัฐ ฤทธิวัชร"></nz-option>
-        </nz-select>
-      </nz-col>
-      <nz-col class="gutter-row" nzSpan="4" nzOffset="12" style="text-align:right;">
-        <button nz-button (click)="showModal()"><i nz-icon type="plus" theme="outline"></i>เพิ่ม</button>
-      </nz-col>
-    </div>
-    <!-- <button nz-button>asd</button> -->
-  </ng-template>
+      </ng-container>
+    </ul>
+  </nz-calendar>
 </nz-card>
+<ng-template #addTemplate>
+  <div nz-row nzGutter="20">
+    <nz-col class="gutter-row" nzSpan="8" style="text-align:left;">
+      <nz-select name="select-error" [ngModel]="selectEmployee" (ngModelChange)="onChange($event)">
+        <nz-option nzValue="1" nzLabel="001: ยศกร บางทิพย์"></nz-option>
+        <nz-option nzValue="2" nzLabel="002: ศุภณัฐ ฤทธิวัชร"></nz-option>
+      </nz-select>
+    </nz-col>
+    <nz-col class="gutter-row" nzSpan="4" nzOffset="12" style="text-align:right;">
+      <button nz-button (click)="showModal()"><i nz-icon type="plus" theme="outline"></i>เพิ่ม</button>
+    </nz-col>
+  </div>
+  <!-- <button nz-button>asd</button> -->
+</ng-template>
 
 <nz-modal [(nzVisible)]="isVisible" nzTitle="งาน: {{calendarModalData.subject}}" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()">
