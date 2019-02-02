@@ -5,10 +5,22 @@ import { Observable, of, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
+import * as context from './context-part.interface';
 
+const http_basic: string = context.http_basic;
 const authToken: string = 'currentUser';
 const company: string = 'currentCompany';
 const language: string = 'currentLang';
+const base_authserver_url = context.base_authserver_url;
+const csrf_token_uri: string = context.csrf_token_uri;
+const login_uri: string = context.login_uri;
+const logout_uri: string = context.logout_uri;
+const refresh_uri: string = context.refresh_uri;
+const ACCESS_TOKEN_KEY: string = context.ACCESS_TOKEN_KEY;
+const CSRF_TOKEN_HEADER: string = context.CSRF_TOKEN_HEADER;
+const REFRESH_TOKEN_KEY: string = context.REFRESH_TOKEN_KEY;
+const CSRF_TOKEN: string = context.CSRF_TOKEN;
+const msal_uri: string = context.msal_uri;
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -37,10 +49,9 @@ export class AuthService {
     return JSON.parse(localStorage.getItem(authToken));
   }
 
-  setToken(access, refresh) {
+  setToken(access) {
     localStorage.setItem('id_token', access);
     // localStorage.setItem('currentUser', access);
-    localStorage.setItem('refresh_token', refresh);
   }
 
   login(u: string, p: string) {
@@ -87,7 +98,7 @@ export class AuthService {
       console.log(response);
 
       if (result.access_token) {
-        this.setToken(result.access_token, result.refresh_token);
+        this.setToken(result.access_token);
         // this.jwt = this.jwtHelper.decodeToken(result.access_token);
         // this.isLoggedIn = true;
         // this.userService.setRole(this.jwt.authorities[0]);
@@ -122,6 +133,67 @@ export class AuthService {
     }, (error) => {
       console.log('error: ' + error);
     });
+  }
+
+  oauthApi(uri, body): Observable<any> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${http_basic}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-XSRF-TOKEN': this.csrfToken.token,
+        CSRF_TOKEN: localStorage.getItem(CSRF_TOKEN)
+      }),
+      withCredentials: true
+    };
+
+    // const headers = new Headers();
+    // headers.append('Authorization', `Basic ${http_basic}`);
+    // headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    // headers.append(CSRF_TOKEN, localStorage.getItem(CSRF_TOKEN));
+    // const options = new RequestOptions({ headers: headers });
+
+    // return this.http.post(uri, body, httpOptions).pipe(map(response => {
+    // const result = response.json();
+
+    return this.http.post('http://localhost:8080/almn/login', body, httpOptions)
+      .pipe(map((res: Token) => {
+        const result: any = res;
+
+        if (res.access_token) {
+          this.setToken(result.access_token);
+          // this.setCliams(res);
+        } else {
+          // this.as.error("", 'invalid_grant');
+        }
+      }),
+        catchError((err) => {
+          this.isLoggedIn = false;
+          return of();
+        })
+      );
+
+    // return this.http.post(uri, body, options).map(response => {
+    //   const result = response.json();
+    //   if (result.access_token) {
+    //     this.setToken(result.access_token, result.refresh_token);
+    //     this.jwt = this.jwtHelper.decodeToken(result.access_token);
+    //     this.isLoggedIn = true;
+    //     this.userService.setRole(this.jwt.authorities[0]);
+    //     this.userService.setUserName(this.jwt.user_name);
+    //     this.BlockUI.stop();
+    //     return result;
+    //   } else {
+    //     console.log('Login error, access_token is null')
+    //     this.BlockUI.stop();
+    //     throw Observable.throw(result.error_description);
+    //   }
+    // }).catch(error => {
+    //   this.isLoggedIn = false;
+    //   console.log('Login error, ', error)
+    //   this.BlockUI.stop();
+    //   return Observable.throw(error);
+    // });
   }
 
   logout() {
