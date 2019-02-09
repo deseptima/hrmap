@@ -22,6 +22,7 @@ export class HttpService {
 
   public search(pathName: String, funtionDB: String, args?: Object) {
     const json = this.buildParams(funtionDB, args);
+    console.log(json);
     return this.authHttp.post(this.restServer.getAPI('jsonString', pathName), JSON.stringify(json));
   }
 

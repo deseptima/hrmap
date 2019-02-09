@@ -105,23 +105,23 @@ export class CalendarComponent {
       this.calendarModalData.point = 1
     }
     const dataToLoadPage = {
-      'loadPage': this.form.value
+      'loadPage': 'this.form.value'
     };
-    console.info(this.router.url.split('/')[1]);
     this.httpService.search('dashboard', 'LoadPageHtml', dataToLoadPage).subscribe(
-      data => {
-        const responds = data.json();
-        if (responds.success) {
-          this.title = responds;
-          // this.form = data.json().data.item;
-          console.info(this.title);
-        } else {
-          console.info('Load Error');
-        }
-      },
-      err => {
-        console.info(err);
-      });
+      // data => {
+      //   const responds = data.json();
+      //   if (responds.success) {
+      //     this.title = responds;
+      //     // this.form = data.json().data.item;
+      //     console.info(this.title);
+      //   } else {
+      //     console.info('Load Error');
+      //   }
+      // },
+      // err => {
+      //   console.info(err);
+      // }
+    );
     // this.calendarModalData.subject = this.subject
     // this.calendarModalData.startDate = new Date(this.startDate)
     // this.startTime = this.startTime

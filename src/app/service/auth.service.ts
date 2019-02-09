@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   setToken(access) {
-    localStorage.setItem('id_token', access);
+    localStorage.setItem('currentUser', access);
     // localStorage.setItem('currentUser', access);
   }
 
@@ -58,8 +58,8 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
-        'X-XSRF-TOKEN': localStorage.getItem('XSRF-TOKEN'),
         'Authorization': 'Basic aWhyLXdlYjpzNHQyR1JUU0hXR0FSZDd6YlFteDR1SFQ=',
+        'X-XSRF-TOKEN': localStorage.getItem('XSRF-TOKEN'),
         'csrf_token': localStorage.getItem('csrf_token'),
         responseType: 'JSON'
       }),
@@ -105,6 +105,7 @@ export class AuthService {
         // this.userService.setUserName(this.jwt.user_name);
         // this.BlockUI.stop();
         // return result;
+        this.router.navigateByUrl("/calendar")
       } else {
         console.log('Login error, access_token is null')
         // this.BlockUI.stop();

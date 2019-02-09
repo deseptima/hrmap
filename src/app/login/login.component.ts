@@ -39,23 +39,25 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    // this.authService.login((this.validateForm.controls.userName).toString(), (this.validateForm.controls.password).toString())
+    this.authService.login((this.validateForm.controls.userName).toString(), (this.validateForm.controls.password).toString())
     // // this.authService.login('admin','admin')
     // // console.log(localStorage.getItem('currentUser'))
-    // this.router.navigateByUrl("/calendar")
 
-      this.authService.login(this.validateForm.controls.userName.value, this.validateForm.controls.password.value)
-        .pipe(finalize(() => {
-        }))
-        .subscribe(
-          data => {
-            let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
-            this.router.navigate(["/calendar"]);
-          });
-  
+    // this.authService.login(this.validateForm.controls.userName.value, this.validateForm.controls.password.value)
+    //   .pipe(finalize(() => {
+    //   }))
+    //   .subscribe(
+    //     data => {
+    //       let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
+    //       this.router.navigate(["/calendar"]);
+    //     });
+
   }
   ngAfterViewInit() {
-    this.authService.getCsrfToken();
-    console.log(localStorage.getItem('XSRF-TOKEN'))
+    if (localStorage.getItem('currentUser')) {
+      this.router.navigateByUrl("/calendar")
+    } else {
+      this.authService.getCsrfToken();
+    }
   }
 }

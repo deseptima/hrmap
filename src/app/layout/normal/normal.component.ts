@@ -31,6 +31,7 @@ export class NormalComponent {
   }
 
   logout() {
+    localStorage.clear()
     this.router.navigateByUrl('/login')
     console.log('out')
   }
