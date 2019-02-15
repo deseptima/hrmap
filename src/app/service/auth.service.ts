@@ -99,6 +99,7 @@ export class AuthService {
 
       if (result.access_token) {
         this.setToken(result.access_token);
+        this.isLoggedIn = true;
         // this.jwt = this.jwtHelper.decodeToken(result.access_token);
         // this.isLoggedIn = true;
         // this.userService.setRole(this.jwt.authorities[0]);
@@ -107,6 +108,7 @@ export class AuthService {
         // return result;
         this.router.navigateByUrl("/calendar")
       } else {
+        this.isLoggedIn = false;
         console.log('Login error, access_token is null')
         // this.BlockUI.stop();
         // throw Observable.throw(result.error_description);
@@ -199,8 +201,8 @@ export class AuthService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem(authToken);
-    localStorage.removeItem(company);
+    // localStorage.removeItem(authToken);
+    localStorage.clear()
     this.isLoggedIn = false;
   }
 

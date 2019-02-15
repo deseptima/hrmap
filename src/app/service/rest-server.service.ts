@@ -12,7 +12,7 @@ export class RestServerService {
   constructor(private authService: AuthService, public router: Router) { }
 
   public getAPI(postFix: string, pathName: String): string {
-    if (!this.authService.isLoggedIn) {
+    if (this.authService.isLoggedIn) {
       this.router.navigate(['/login']);
     }
     return 'http://localhost:8080/almn/' + `${pathName}` + '/' + `${postFix}`;

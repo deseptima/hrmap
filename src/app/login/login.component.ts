@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit {
       password: [null, [Validators.required]],
       remember: [true]
     });
+    if (localStorage.getItem('currentUser')) {
+      this.router.navigate(["/calendar"]);
+    }
   }
 
   login() {
