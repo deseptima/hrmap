@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login((this.validateForm.controls.userName).toString(), (this.validateForm.controls.password).toString())
+    this.authService.login((this.validateForm.controls.userName.value).toString(), (this.validateForm.controls.password.value).toString())
     // // this.authService.login('admin','admin')
     // // console.log(localStorage.getItem('currentUser'))
 

@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { NzModalRef, NzModalService, END } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/service/http-service.service';
+import { Router } from "@angular/router";
+
 
 @Component({
   selector: 'master-company',
@@ -33,9 +35,13 @@ export class CompanyComponent {
   displayData = []
 
   constructor(private fb: FormBuilder, private modal: NzModalService,
-    private httpService: HttpService, ) { }
+    private httpService: HttpService,
+    private router: Router, ) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('role') == 'dev') {
+      this.router.navigateByUrl('/calendar')
+    }
     this.saveForm = this.fb.group({
       companyid: [''],
       companyname: ['', [Validators.required]],
@@ -143,12 +149,22 @@ export class CompanyComponent {
         nzCancelText: 'ยกเลิก',
         nzOnOk: () => {
           this.addVisible = false;
-          this.saveForm.reset()
+          this.saveForm = this.fb.group({
+            companyid: [''],
+            companyname: ['', [Validators.required]],
+            companyaddress: ['', [Validators.required]],
+            companycode: ['', [Validators.required]],
+          });
         }
       });
     } else {
       this.addVisible = false;
-      this.saveForm.reset()
+      this.saveForm = this.fb.group({
+        companyid: [''],
+        companyname: ['', [Validators.required]],
+        companyaddress: ['', [Validators.required]],
+        companycode: ['', [Validators.required]],
+      });
     }
   }
 
@@ -187,12 +203,22 @@ export class CompanyComponent {
         nzCancelText: 'ยกเลิก',
         nzOnOk: () => {
           this.editVisible = false;
-          this.editForm.reset()
+          this.editForm = this.fb.group({
+            companyid: [''],
+            companyname: ['', [Validators.required]],
+            companyaddress: ['', [Validators.required]],
+            companycode: ['', [Validators.required]],
+          });
         }
       });
     } else {
       this.editVisible = false;
-      this.editForm.reset()
+      this.editForm = this.fb.group({
+        companyid: [''],
+        companyname: ['', [Validators.required]],
+        companyaddress: ['', [Validators.required]],
+        companycode: ['', [Validators.required]],
+      });
     }
   }
 

@@ -54,7 +54,7 @@ export class AuthService {
     // localStorage.setItem('currentUser', access);
   }
 
-  login(u: string, p: string) {
+  login(u: any, p: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -72,6 +72,8 @@ export class AuthService {
     // const body = `username=${u}&password=${p}`;
     let data: string = 'username=' + u + '&password=' + p;
     let body: string = 'username=admin&password=admin'
+    localStorage.setItem('role', u);
+
     // const options = new RequestOptions({ headers: headers, withCredentials: true });
     // return this.http.post<any>('http://localhost:8080/almn/login', body, httpOptions)
     //   .pipe(map((res: Token) => {
@@ -93,7 +95,7 @@ export class AuthService {
     //       console.log(res)
     //     }
     //   );
-    return this.http.post('http://localhost:8080/almn/login', body, httpOptions).pipe(map(response => {
+    return this.http.post('http://localhost:8080/almn/login', data, httpOptions).pipe(map(response => {
       const result: any = response
       console.log(response);
 
@@ -106,7 +108,7 @@ export class AuthService {
         // this.userService.setUserName(this.jwt.user_name);
         // this.BlockUI.stop();
         // return result;
-        this.router.navigateByUrl("/calendar")
+        this.router.navigateByUrl("/dashboard").then(res=>{window.location.reload()})
       } else {
         this.isLoggedIn = false;
         console.log('Login error, access_token is null')

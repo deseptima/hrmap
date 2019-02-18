@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { NzModalRef, NzModalService, END } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/service/http-service.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'master-branch',
@@ -20,24 +21,28 @@ export class BranchComponent {
   addVisible = false
   editVisible = false
   ddlCompany = []
-  data = [
-    {
-      id: 1,
-      branchCode: '001',
-      companyCode: '001: Soft Square International Co., Ltd.',
-      name: 'สาขา รังสิต',
-      address: '51/597 หมู่ 7 ตำบล หลักหก อำเภอ เมือง จังหวัด ปทุมธานี'
-    }
-  ];
+  // data = [
+  //   {
+  //     id: 1,
+  //     branchCode: '001',
+  //     companyCode: '001: Soft Square International Co., Ltd.',
+  //     name: 'สาขา รังสิต',
+  //     address: '51/597 หมู่ 7 ตำบล หลักหก อำเภอ เมือง จังหวัด ปทุมธานี'
+  //   }
+  // ];
 
   sortName = 'branch_code';
   sortValue = 'ascend';
   displayData = []
 
   constructor(private fb: FormBuilder, private modal: NzModalService,
-    private httpService: HttpService, ) { }
+    private httpService: HttpService,
+    private router: Router, ) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('role') == 'dev') {
+      this.router.navigateByUrl('/calendar')
+    }
     this.saveForm = this.fb.group({
       branchid: [''],
       branchname: ['', [Validators.required]],
@@ -159,12 +164,24 @@ export class BranchComponent {
         nzCancelText: 'ยกเลิก',
         nzOnOk: () => {
           this.addVisible = false;
-          this.saveForm.reset()
+          this.saveForm = this.fb.group({
+            branchid: [''],
+            branchname: ['', [Validators.required]],
+            branchaddress: ['', [Validators.required]],
+            branchcode: ['', [Validators.required]],
+            companycode: ['', [Validators.required]],
+          });
         }
       });
     } else {
       this.addVisible = false;
-      this.saveForm.reset()
+      this.saveForm = this.fb.group({
+        branchid: [''],
+        branchname: ['', [Validators.required]],
+        branchaddress: ['', [Validators.required]],
+        branchcode: ['', [Validators.required]],
+        companycode: ['', [Validators.required]],
+      });
     }
   }
 
@@ -212,12 +229,24 @@ export class BranchComponent {
         nzCancelText: 'ยกเลิก',
         nzOnOk: () => {
           this.editVisible = false;
-          this.editForm.reset()
+          this.editForm = this.fb.group({
+            branchid: [''],
+            branchname: ['', [Validators.required]],
+            branchaddress: ['', [Validators.required]],
+            branchcode: ['', [Validators.required]],
+            companycode: ['', [Validators.required]],
+          });
         }
       });
     } else {
       this.editVisible = false;
-      this.editForm.reset()
+      this.editForm = this.fb.group({
+        branchid: [''],
+        branchname: ['', [Validators.required]],
+        branchaddress: ['', [Validators.required]],
+        branchcode: ['', [Validators.required]],
+        companycode: ['', [Validators.required]],
+      });
     }
   }
 

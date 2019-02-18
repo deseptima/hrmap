@@ -3,7 +3,7 @@
     <i nz-icon type="home"></i>หน้าหลัก
   </nz-breadcrumb-item>
 </nz-breadcrumb>
-<nz-card nzTitle="แฟ้มข้อมูลหลัก">
+<nz-card nzTitle="แฟ้มข้อมูลหลัก" *ngIf="role!='dev'">
   <div nz-card-grid [ngStyle]="gridStyle" (click)="route('/master/company')">
     <div nz-row nzGutter="8">
       <div nz-col nzSpan="10">

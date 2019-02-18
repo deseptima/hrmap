@@ -76,7 +76,7 @@
         <nz-form-label>รหัสบริษัท</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-select name="select-error" formControlName="companycode" [ngModel]="'001'">
+        <nz-select name="select-error" formControlName="companycode">
           <!-- <nz-option nzValue="001" nzLabel="001: Soft Square International Co., Ltd."></nz-option> -->
           <nz-option *ngFor="let option of ddlCompany " [nzLabel]="option.label" [nzValue]="option.value">
           </nz-option>
@@ -129,7 +129,7 @@
         <nz-form-label>รหัสบริษัท</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-select name="select-error" formControlName="companycode" [ngModel]="'001'">
+        <nz-select name="select-error" formControlName="companycode">
           <!-- <nz-option nzValue="001" nzLabel="001: Soft Square International Co., Ltd."></nz-option> -->
           <nz-option *ngFor="let option of ddlCompany " [nzLabel]="option.label" [nzValue]="option.value">
           </nz-option>

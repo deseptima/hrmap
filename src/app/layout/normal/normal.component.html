@@ -1,18 +1,27 @@
 <nz-layout class="layout">
   <nz-header style="position:fixed;width:100%;z-index: 900;">
     <div nz-col nzSpan="4">
-      <i class="menu-drawer-icon" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'" (click)="isCollapsed=!isCollapsed"></i>
+      <i class="menu-drawer-icon" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'"
+        (click)="isCollapsed=!isCollapsed"></i>
     </div>
     <div nz-col nzSpan="20" style="text-align:right;">
-      <b style="color:white;">
+      <b style="color:white;" *ngIf="role=='admin'">
         <i nz-icon type="user" theme="outline"></i>ผู้จัดการระบบ
+      </b>
+      <b style="color:white;" *ngIf="role=='pm'">
+        <i nz-icon type="user" theme="outline"></i>หัวหน้าโปรเจ็ค
+      </b>
+      <b style="color:white;" *ngIf="role=='dev'">
+        <i nz-icon type="user" theme="outline"></i>พนักงาน
       </b>
     </div>
   </nz-header>
-  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate" style="width:110%;z-index: 800;height: 100vh;">
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate"
+    style="width:110%;z-index: 800;height: 100vh;">
     <ul [nzTheme]=" 'dark'" nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" style="margin-top:64px;">
-      <li nz-submenu>
-        <span title (click)="route('/dashboard')"><i nz-icon type="folder-open"></i><span class="nav-text">หน้าหลัก</span></span>
+      <li nz-submenu *ngIf="role!='dev'">
+        <span title (click)="route('/dashboard')"><i nz-icon type="folder-open"></i><span
+            class="nav-text">หน้าหลัก</span></span>
         <ul>
           <li nz-menu-item (click)="route('/master/company')">จัดการข้อมูลบริษัท</li>
           <li nz-menu-item (click)="route('/master/branch')">จัดการข้อมูลสาขา</li>
@@ -22,10 +31,16 @@
           <li nz-menu-item (click)="route('/master/supply')">จัดการข้อมูลทรัพยากรอุปกรณ์</li>
         </ul>
       </li>
-      <li nz-menu-item (click)="route('/calendar')"><span><i nz-icon type="calendar"></i><span class="nav-text">จัดการแผนการทำงาน</span></span></li>
-      <li nz-menu-item (click)="route('/ask-question')"><span><i nz-icon type="question-circle"></i><span class="nav-text">ระบบสอบถาม</span></span></li>
-      <li nz-menu-item (click)="route('/report')"><span><i nz-icon type="file"></i><span class="nav-text">ออกรายงาน</span></span></li>
-      <li nz-menu-item (click)="logout()"><span><i nz-icon type="unlock"></i><span class="nav-text">ออกจากระบบ</span></span></li>
+      <li nz-menu-item (click)="route('/dashboard')" *ngIf="role=='dev'"><span><i nz-icon type="folder-open"></i><span
+            class="nav-text">หน้าหลัก</span></span></li>
+      <li nz-menu-item (click)="route('/calendar')"><span><i nz-icon type="calendar"></i><span
+            class="nav-text">จัดการแผนการทำงาน</span></span></li>
+      <li nz-menu-item (click)="route('/ask-question')"><span><i nz-icon type="question-circle"></i><span
+            class="nav-text">ระบบสอบถาม</span></span></li>
+      <li nz-menu-item (click)="route('/report')"><span><i nz-icon type="file"></i><span
+            class="nav-text">ออกรายงาน</span></span></li>
+      <li nz-menu-item (click)="logout()"><span><i nz-icon type="unlock"></i><span
+            class="nav-text">ออกจากระบบ</span></span></li>
     </ul>
   </nz-sider>
   <nz-layout>
