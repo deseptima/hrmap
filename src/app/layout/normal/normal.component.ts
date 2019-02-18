@@ -10,14 +10,15 @@ export class NormalComponent {
   isCollapsed = false;
   triggerTemplate = null;
   @ViewChild('trigger') customTrigger: TemplateRef<void>;
+  role = localStorage.getItem('role')
+
+  constructor(
+    private router: Router, ) {
+  }
 
   /** custom trigger can be TemplateRef **/
   changeTrigger(): void {
     this.triggerTemplate = this.customTrigger;
-  }
-
-  constructor(
-    private router: Router, ) {
   }
 
   close() {
@@ -31,6 +32,7 @@ export class NormalComponent {
   }
 
   logout() {
+    localStorage.clear()
     this.router.navigateByUrl('/login')
     console.log('out')
   }

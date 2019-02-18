@@ -12,44 +12,49 @@
   </nz-breadcrumb-item>
 </nz-breadcrumb>
 <nz-card nzTitle="จัดการข้อมูลทีม">
-  <nz-row nzGutter="16">
-    <nz-col class="gutter-row" nzSpan="16" nzOffset="4" nzGutter="8">
-      <nz-input-group nzSearch [nzSuffix]="suffixButton">
-        <input type="text" nz-input placeholder="รหัสทีม, รหัสบริษัท, รหัสสาขา, รหัสแผนก, ชื่อทีม, หัวหน้าทีม">
-      </nz-input-group>
-      <ng-template #suffixButton>
-        <button nz-button nzType="primary" nzSearch>ค้นหา</button>
-      </ng-template>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="4" nzGutter="8" style="text-align:right;">
-      <button nz-button nzType="primary" (click)="isVisible=!isVisible"><i nz-icon type="plus" theme="outline"></i>เพิ่ม</button>
-    </nz-col>
-  </nz-row>
+  <form nz-form [nzLayout]="'inline'" [formGroup]="searchForm" (ngSubmit)="submitForm()">
+    <nz-row nzGutter="16">
+      <nz-col class="gutter-row" nzSpan="16" nzOffset="4" nzGutter="8">
+        <nz-input-group nzSearch [nzSuffix]="suffixButton">
+          <input type="text" formControlName="search" nz-input
+            placeholder="รหัสทีม, รหัสบริษัท, รหัสสาขา, รหัสแผนก, ชื่อทีม, หัวหน้าทีม">
+        </nz-input-group>
+        <ng-template #suffixButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>ค้นหา</button>
+        </ng-template>
+      </nz-col>
+      <nz-col class="gutter-row" nzSpan="4" nzGutter="8" style="text-align:right;">
+        <button nz-button nzType="primary" (click)="addModal()"><i nz-icon type="plus"
+            theme="outline"></i>เพิ่ม</button>
+      </nz-col>
+    </nz-row>
+  </form>
 
   <nz-row>
     <nz-col nzSpan="24">
       <nz-table #basicTable [nzData]="displayData">
         <thead (nzSortChange)="sort($event)" nzSingleSort>
           <tr>
-            <th nzShowSort nzSortKey="teamCode">รหัสทีม</th>
-            <th nzShowSort nzSortKey="companyCode">รหัสบริษัท</th>
-            <th nzShowSort nzSortKey="branchCode">รหัสสาขา</th>
-            <th nzShowSort nzSortKey="departmentCode">รหัสแผนก</th>
-            <th nzShowSort nzSortKey="name">ชื่อทีม</th>
-            <th nzShowSort nzSortKey="teamLeader">หัวหน้าทีม</th>
+            <th nzShowSort nzSortKey="team_code">รหัสทีม</th>
+            <th nzShowSort nzSortKey="company_code">รหัสบริษัท</th>
+            <th nzShowSort nzSortKey="branch_code">รหัสสาขา</th>
+            <th nzShowSort nzSortKey="dep_code">รหัสแผนก</th>
+            <th nzShowSort nzSortKey="team_name">ชื่อทีม</th>
+            <th nzShowSort nzSortKey="team_header">หัวหน้าทีม</th>
             <th> </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of displayData">
-            <td>{{data.teamCode}}</td>
-            <td>{{data.companyCode}}</td>
-            <td>{{data.branchCode}}</td>
-            <td>{{data.departmentCode}}</td>
-            <td>{{data.name}}</td>
-            <td>{{data.teamLeader}}</td>
+            <td (click)="editModal(data.team_id)">{{data.team_code}}</td>
+            <td>{{data.company_code}}</td>
+            <td>{{data.branch_code}}</td>
+            <td>{{data.dep_code}}</td>
+            <td>{{data.team_name}}</td>
+            <td>{{data.team_header}}</td>
             <td>
-              <button nz-button nzType="danger" nzShape="circle"><i nz-icon type="delete" theme="outline"></i></button>
+              <button nz-button nzType="danger" nzShape="circle" (click)="delete(data.team_id)"><i nz-icon type="delete"
+                  theme="outline"></i></button>
             </td>
           </tr>
         </tbody>
@@ -58,20 +63,27 @@
   </nz-row>
 
 </nz-card>
-<ng-template #modalFooter>
-  <button nz-button nzType="default" (click)="handleCancel()">ยกเลิก</button>
-  <button nz-button nzType="primary" (click)="handleOk()">ตกลง</button>
+
+<ng-template #addFooter>
+  <button nz-button nzType="default" (click)="addCancel()">ยกเลิก</button>
+  <button nz-button nzType="primary" (click)="addOk()">ตกลง</button>
 </ng-template>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มทีม" (nzOnCancel)="handleCancel()" [nzFooter]="modalFooter">
-  <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+<ng-template #editFooter>
+  <button nz-button nzType="default" (click)="editCancel()">ยกเลิก</button>
+  <button nz-button nzType="primary" (click)="editOk()">ตกลง</button>
+</ng-template>
+
+<nz-modal [(nzVisible)]="addVisible" nzTitle="เพิ่มทีม" (nzOnCancel)="addCancel()" [nzFooter]="addFooter">
+  <form nz-form [nzLayout]="'inline'" [formGroup]="saveForm" (ngSubmit)="submitForm()">
     <nz-row class="pd-row" nzGutter="20">
       <nz-col nzSpan="8">
         <nz-form-label>รหัสบริษัท</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-select name="select-error" formControlName="companyCode" [ngModel]="'001'">
-          <nz-option nzValue="001" nzLabel="001: Soft Square International Co., Ltd."></nz-option>
+        <nz-select name="select-error" formControlName="companycode">
+          <nz-option *ngFor="let option of ddlCompany " [nzLabel]="option.label" [nzValue]="option.value">
+          </nz-option>
         </nz-select>
       </nz-col>
     </nz-row>
@@ -80,8 +92,9 @@
         <nz-form-label>รหัสสาขา</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-select name="select-error" formControlName="branchCode" [ngModel]="'001'">
-          <nz-option nzValue="001" nzLabel="001: สาขา รังสิต"></nz-option>
+        <nz-select name="select-error" formControlName="branchcode">
+          <nz-option *ngFor="let option of ddlBranch" [nzLabel]="option.label" [nzValue]="option.value">
+          </nz-option>
         </nz-select>
       </nz-col>
     </nz-row>
@@ -90,9 +103,22 @@
         <nz-form-label>รหัสแผนก</nz-form-label>
       </nz-col>
       <nz-col nzSpan="16">
-        <nz-select name="select-error" formControlName="departmentCode" [ngModel]="'001'">
-          <nz-option nzValue="001" nzLabel="001: Java Application"></nz-option>
+        <nz-select name="select-error" formControlName="depcode">
+          <nz-option *ngFor="let option of ddlDep" [nzLabel]="option.label" [nzValue]="option.value">
+          </nz-option>
         </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>รหัสทีม</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-group>
+          <input formControlName="teamcode" nz-input placeholder="รหัสทีม">
+        </nz-input-group>
+        <!-- <nz-form-explain *ngIf="validateForm.get('branchName').dirty && validateForm.get('branchName').errors">
+          กรุณากรอกชื่อสาขา !</nz-form-explain> -->
       </nz-col>
     </nz-row>
     <nz-row class="pd-row" nzGutter="20">
@@ -101,7 +127,7 @@
       </nz-col>
       <nz-col nzSpan="16">
         <nz-input-group>
-          <input formControlName="teamName" nz-input placeholder="ชื่อทีม">
+          <input formControlName="teamname" nz-input placeholder="ชื่อทีม">
         </nz-input-group>
         <!-- <nz-form-explain *ngIf="validateForm.get('teamName').dirty && validateForm.get('teamName').errors">
           กรุณากรอกชื่อทีม !</nz-form-explain> -->
@@ -113,7 +139,81 @@
       </nz-col>
       <nz-col nzSpan="16">
         <nz-input-group>
-          <input formControlName="teamLeaderName" nz-input placeholder="ชื่อหัวหน้าทีม">
+          <input formControlName="teamheader" nz-input placeholder="ชื่อหัวหน้าทีม">
+        </nz-input-group>
+        <!-- <nz-form-explain *ngIf="validateForm.get('teamLeaderName').dirty && validateForm.get('teamLeaderName').errors">
+          กรุณากรอกชื่อหัวหน้าทีม !</nz-form-explain> -->
+      </nz-col>
+    </nz-row>
+  </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="editVisible" nzTitle="แก้ไขข้อมูลทีม" (nzOnCancel)="addCancel()" [nzFooter]="editFooter">
+  <form nz-form [nzLayout]="'inline'" [formGroup]="editForm" (ngSubmit)="submitForm()">
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>รหัสบริษัท</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-select name="select-error" formControlName="companycode">
+          <nz-option *ngFor="let option of ddlCompany " [nzLabel]="option.label" [nzValue]="option.value">
+          </nz-option>
+        </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>รหัสสาขา</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-select name="select-error" formControlName="branchcode">
+          <nz-option *ngFor="let option of ddlBranch" [nzLabel]="option.label" [nzValue]="option.value">
+          </nz-option>
+        </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>รหัสแผนก</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-select name="select-error" formControlName="depcode">
+          <nz-option *ngFor="let option of ddlDep" [nzLabel]="option.label" [nzValue]="option.value">
+          </nz-option>
+        </nz-select>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>รหัสทีม</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-group>
+          <input formControlName="teamcode" nz-input placeholder="รหัสทีม">
+        </nz-input-group>
+        <!-- <nz-form-explain *ngIf="validateForm.get('branchName').dirty && validateForm.get('branchName').errors">
+          กรุณากรอกชื่อสาขา !</nz-form-explain> -->
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>ชื่อทีม</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-group>
+          <input formControlName="teamname" nz-input placeholder="ชื่อทีม">
+        </nz-input-group>
+        <!-- <nz-form-explain *ngIf="validateForm.get('teamName').dirty && validateForm.get('teamName').errors">
+          กรุณากรอกชื่อทีม !</nz-form-explain> -->
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col nzSpan="8">
+        <nz-form-label>ชื่อหัวหน้าทีม</nz-form-label>
+      </nz-col>
+      <nz-col nzSpan="16">
+        <nz-input-group>
+          <input formControlName="teamheader" nz-input placeholder="ชื่อหัวหน้าทีม">
         </nz-input-group>
         <!-- <nz-form-explain *ngIf="validateForm.get('teamLeaderName').dirty && validateForm.get('teamLeaderName').errors">
           กรุณากรอกชื่อหัวหน้าทีม !</nz-form-explain> -->

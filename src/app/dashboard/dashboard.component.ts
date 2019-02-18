@@ -31,10 +31,13 @@ export class DashboardComponent {
       address: 'Sidney No. 1 Lake Park'
     }
   ];
+  role = localStorage.getItem('role')
   constructor(
     private router: Router, ) {
   }
   route(link: any) {
     this.router.navigateByUrl(link)
+  }
+  ngOnInit(): void {
   }
 }

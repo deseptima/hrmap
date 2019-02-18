@@ -1,146 +1,121 @@
-<nz-card>
-  <nz-breadcrumb>
-    <nz-breadcrumb-item>
-      <a [routerLink]="['../dashboard']">
-        <i nz-icon type="home"></i>หน้าหลัก
-      </a>
-    </nz-breadcrumb-item>
-    <nz-breadcrumb-item>
-      จัดการแผนการทำงาน
-    </nz-breadcrumb-item>
-  </nz-breadcrumb>
-  <nz-card [nzExtra]="addTemplate">
-    <nz-calendar [(ngModel)]="selectedValue">
-      <ul *nzDateCell="let date" class="events">
-        <ng-container [ngSwitch]="date">
-          <ng-container *ngSwitchCase="date">
-            <li *ngFor="let item of dataSetMontly">
-              <div *ngIf="item.date == date">
-                <!-- <nz-badge [nzStatus]="item.type" [nzText]="item.data" (click)="showModal(item.id)"></nz-badge> -->
-                <label (click)="showModal(item.id)">
-                  {{item.data}}
-                </label>
-              </div>
-            </li>
-          </ng-container>
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['../dashboard']">
+      <i nz-icon type="home"></i>หน้าหลัก
+    </a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    จัดการแผนการทำงาน
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<nz-card [nzExtra]="addTemplate">
+  <nz-calendar [(ngModel)]="selectedValue">
+    <ul *nzDateCell="let date" class="events">
+      <ng-container [ngSwitch]="date">
+        <ng-container *ngSwitchCase="date">
+          <li *ngFor="let item of dataSetMontly">
+            <div *ngIf="item.start_date == date">
+              <label (click)="showModal(item.plan_id)">
+                {{item.plan_name}}
+              </label>
+            </div>
+          </li>
         </ng-container>
-      </ul>
-    </nz-calendar>
-  </nz-card>
-  <ng-template #addTemplate>
+      </ng-container>
+    </ul>
+  </nz-calendar>
+</nz-card>
+<ng-template #addTemplate>
+  <form nz-form [nzLayout]="'inline'" [formGroup]="searchForm">
     <div nz-row nzGutter="20">
       <nz-col class="gutter-row" nzSpan="8" style="text-align:left;">
-        <nz-select name="select-error" [ngModel]="selectEmployee" (ngModelChange)="onChange($event)">
-          <nz-option nzValue="1" nzLabel="001: ยศกร บางทิพย์"></nz-option>
-          <nz-option nzValue="2" nzLabel="002: ศุภณัฐ ฤทธิวัชร"></nz-option>
+        <nz-select name="select-error" formControlName="search" (ngModelChange)="onChange($event)">
+          <nz-option *ngFor="let option of ddlEmp" [nzLabel]="option.label" [nzValue]="option.value">
+          </nz-option>
         </nz-select>
       </nz-col>
       <nz-col class="gutter-row" nzSpan="4" nzOffset="12" style="text-align:right;">
-        <button nz-button (click)="showModal()"><i nz-icon type="plus" theme="outline"></i>เพิ่ม</button>
+        <button nz-button (click)="showModal()" [disabled]="dataOnChange" ><i nz-icon type="plus" theme="outline"></i>เพิ่ม</button>
       </nz-col>
     </div>
-    <!-- <button nz-button>asd</button> -->
-  </ng-template>
-</nz-card>
+  </form>
+</ng-template>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="งาน: {{calendarModalData.subject}}" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()">
+<ng-template #modalFooter>
   <nz-row class="pd-row" nzGutter="20">
-    <nz-col class="gutter-row" nzSpan="4">
-      <b>งาน:</b>
+    <nz-col class="gutter-row" nzSpan="3">
+      <button nz-button nzType="danger" (click)="delete(modal_id)"><i nz-icon type="delete"
+          theme="outline"></i></button>
     </nz-col>
-    <nz-col class="gutter-row" nzSpan="20">
-      <nz-input-group>
-        <input [(ngModel)]="calendarModalData.subject" nz-input placeholder="ชื่องาน">
-      </nz-input-group>
+    <nz-col class="gutter-row" nzSpan="21">
+      <button nz-button nzType="default" (click)="editCancel()">ยกเลิก</button>
+      <button nz-button nzType="primary" (click)="editOk()">ตกลง</button>
     </nz-col>
   </nz-row>
-  <nz-row class="pd-row" nzGutter="20">
-    <nz-col class="gutter-row" nzSpan="4">
-      <b>ประเภทงาน:</b>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="20">
-      <nz-select name="select-error" [(ngModel)]="calendarModalData.type">
-        <nz-option nzValue="1" nzLabel="Dev"></nz-option>
-        <nz-option nzValue="2" nzLabel="Issue"></nz-option>
-        <nz-option nzValue="3" nzLabel="Maintenance"></nz-option>
-      </nz-select>
-    </nz-col>
-  </nz-row>
-  <nz-row class="pd-row" nzGutter="20">
-    <nz-col class="gutter-row" nzSpan="4">
-      <b>คะแนน:</b>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="20">
-      <nz-input-group>
-        <nz-input-number [(ngModel)]="calendarModalData.point" [nzMin]="1" [nzStep]="1"></nz-input-number>
-      </nz-input-group>
-    </nz-col>
-  </nz-row>
-  <nz-row class="pd-row" nzGutter="20">
-    <nz-col class="gutter-row" nzSpan="4">
-      <b>ตั้งแต่:</b>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="!calendarModalData.isAllDay" style="width:unset;">
-      <nz-date-picker [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="dd-MMM-yyyy" [(ngModel)]="calendarModalData.startDate"
-        [nzStyle]="dateStyle" nzPlaceHolder="Start" (ngModelChange)="onStartChange($event)" (nzOnOpenChange)="handleStartOpenChange($event)">
-      </nz-date-picker>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="!calendarModalData.isAllDay">
-      <nz-time-picker [(ngModel)]="calendarModalData.startTime" nzFormat="HH:mm"></nz-time-picker>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay" style="width:unset;">
-      <nz-date-picker nzDisabled [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="dd-MMM-yyyy" [(ngModel)]="calendarModalData.startDate"
-        [nzStyle]="dateStyle" nzPlaceHolder="Start" (ngModelChange)="onStartChange($event)" (nzOnOpenChange)="handleStartOpenChange($event)">
-      </nz-date-picker>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay" style="width:unset;">
-      <nz-time-picker [(ngModel)]="calendarModalData.startTime" nzFormat="HH:mm" nzDisabled></nz-time-picker>
-    </nz-col>
-  </nz-row>
-  <nz-row class="pd-row" nzGutter="20">
-    <nz-col class="gutter-row" nzSpan="4">
-      <b>ถึง:</b>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="!calendarModalData.isAllDay" style="width:unset;">
-      <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime nzFormat="dd-MMM-yyyy" [(ngModel)]="calendarModalData.endDate"
-        [nzStyle]="dateStyle" nzPlaceHolder="End" [nzOpen]="endOpen" (ngModelChange)="onEndChange($event)"
-        (nzOnOpenChange)="handleEndOpenChange($event)">
-      </nz-date-picker>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="!calendarModalData.isAllDay">
-      <nz-time-picker [(ngModel)]="calendarModalData.endTime" nzFormat="HH:mm"></nz-time-picker>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay" style="width:unset;">
-      <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime nzFormat="dd-MMM-yyyy" [(ngModel)]="calendarModalData.endDate"
-        [nzStyle]="dateStyle" nzPlaceHolder="End" [nzOpen]="endOpen" (ngModelChange)="onEndChange($event)"
-        (nzOnOpenChange)="handleEndOpenChange($event) " nzDisabled>
-      </nz-date-picker>
-    </nz-col>
-    <nz-col class="gutter-row" nzSpan="8" *ngIf="calendarModalData.isAllDay" style="width:unset;">
-      <nz-time-picker [(ngModel)]="calendarModalData.endTime" nzFormat="HH:mm" nzDisabled></nz-time-picker>
-    </nz-col>
-  </nz-row>
-  <nz-row class="pd-row" nzGutter="20">
-    <nz-col class="gutter-row" nzSpan="12">
-      <label nz-checkbox [(ngModel)]="calendarModalData.isAllDay">ทั้งวัน</label>
-    </nz-col>
-  </nz-row>
-  <nz-row class="pd-row" nzGutter="20">
-    <nz-col class="gutter-row" nzSpan="24">
-      <label><b>รายละเอียด</b></label>
-    </nz-col>
-  </nz-row>
-  <nz-row class="pd-row" nzGutter="20">
-    <nz-col class="gutter-row" nzSpan="24">
-      <textarea rows="5" nz-input style="resize:none;" maxlength="100" [(ngModel)]="calendarModalData.details"></textarea>
-    </nz-col>
-  </nz-row>
+</ng-template>
 
+<nz-modal [(nzVisible)]="isVisible" nzTitle="ชื่องาน: {{modal_name}}" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()" [nzFooter]="modalFooter">
+  <form nz-form [nzLayout]="'inline'" [formGroup]="saveForm" (ngSubmit)="submitForm()">
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col class="gutter-row" nzSpan="4">
+        <b>ชื่องาน:</b>
+      </nz-col>
+      <nz-col class="gutter-row" nzSpan="20">
+        <nz-input-group>
+          <nz-col nzSpan="8" style="margin-left: -10px;">
+            <input formControlName="plancode" nz-input placeholder="รหัสหน้า">
+          </nz-col>
+          <nz-col nzSpan="16" style="margin-left: -10px;">
+            <input formControlName="planname" nz-input placeholder="ชื่องาน">
+          </nz-col>
+        </nz-input-group>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col class="gutter-row" nzSpan="4">
+        <b>ประเภทงาน:</b>
+      </nz-col>
+      <nz-col class="gutter-row" nzSpan="8">
+        <nz-select name="select-error" formControlName="plantype">
+          <nz-option nzValue="d" nzLabel="Dev"></nz-option>
+          <nz-option nzValue="i" nzLabel="Issue"></nz-option>
+          <nz-option nzValue="m" nzLabel="Maintenance"></nz-option>
+        </nz-select>
+      </nz-col>
+      <nz-col class="gutter-row" nzSpan="4">
+        <b>คะแนน:</b>
+      </nz-col>
+      <nz-col class="gutter-row" nzSpan="8">
+        <nz-input-group>
+          <nz-input-number formControlName="points" [nzMin]="0" [nzStep]="1"></nz-input-number>
+        </nz-input-group>
+      </nz-col>
+    </nz-row>
+    <nz-row class="pd-row" nzGutter="20">
+      <nz-col class="gutter-row" nzSpan="4">
+        <b>วันที่:</b>
+      </nz-col>
+      <nz-col class="gutter-row" nzSpan="8" style="width:unset;">
+        <nz-date-picker formControlName="startdate" nzFormat="dd-MMM-yyyy">
+        </nz-date-picker>
+      </nz-col>
+      <nz-row class="pd-row" nzGutter="20">
+        <nz-col class="gutter-row" nzSpan="24">
+          <label><b>รายละเอียด</b></label>
+        </nz-col>
+      </nz-row>
+      <nz-row class="pd-row" nzGutter="20">
+        <nz-col class="gutter-row" nzSpan="24">
+          <textarea rows="5" nz-input style="resize:none;" maxlength="100" formControlName="plandesc"></textarea>
+        </nz-col>
+      </nz-row>
+    </nz-row>
+  </form>
 </nz-modal>
 
-<nz-modal [(nzVisible)]="isVisible2" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<!-- <nz-modal [(nzVisible)]="isVisible2" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <p>Content one</p>
   <p>Content two</p>
   <p>Content three</p>
-</nz-modal>
+</nz-modal> -->
