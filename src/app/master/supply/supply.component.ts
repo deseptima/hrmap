@@ -299,15 +299,15 @@ export class SupplyComponent {
 
   delete(id: any) {
     console.log(id);
-    var data = this.displayData.filter(a => a.dep_id == id)
-    this.editForm.controls.depid.setValue(data[0].dep_id + '')
-    console.log(data);
+    var data = this.displayData.filter(a => a.resource_id == id)
+    this.editForm.controls.resourceid.setValue(data[0].resource_id + '')
+    console.log(this.displayData);
 
     var delete_id = {
       'delete': this.editForm.value
     };
     var dataSave: any
-    this.httpService.delete('resource', 'deleteresource', delete_id).subscribe(
+    this.httpService.delete('resource', 'deleteRes', delete_id).subscribe(
       res => {
         dataSave = res
         console.log(dataSave);

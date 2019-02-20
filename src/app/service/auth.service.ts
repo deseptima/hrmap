@@ -73,6 +73,7 @@ export class AuthService {
     let data: string = 'username=' + u + '&password=' + p;
     let body: string = 'username=admin&password=admin'
     localStorage.setItem('role', u);
+    this.router.navigateByUrl("/dashboard").then(res=>{window.location.reload()})
 
     // const options = new RequestOptions({ headers: headers, withCredentials: true });
     // return this.http.post<any>('http://localhost:8080/almn/login', body, httpOptions)
@@ -108,7 +109,6 @@ export class AuthService {
         // this.userService.setUserName(this.jwt.user_name);
         // this.BlockUI.stop();
         // return result;
-        this.router.navigateByUrl("/dashboard").then(res=>{window.location.reload()})
       } else {
         this.isLoggedIn = false;
         console.log('Login error, access_token is null')
